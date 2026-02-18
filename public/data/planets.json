@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "name": "Tatooine",
+    "rotation_period": "23",
+    "diameter": "10465",
+    "climate": "arid",
+    "population": "200000",
+    "description": "A harsh desert world orbiting twin suns in the Outer Rim, where moisture farmers scrape survival from the dry earth and sprawling spaceports like Mos Espa host smugglers, bounty hunters, and desperate souls seeking fortune."
+  },
+  {
+    "id": 2,
+    "name": "Alderaan",
+    "rotation_period": "24",
+    "diameter": "12500",
+    "climate": "temperate",
+    "population": "2000000000",
+    "description": "A peaceful Core World renowned for its stunning mountain ranges and verdant grasslands, home to influential pacifist culture and some of the Republic's most dedicated diplomats and statesmen."
+  },
+  {
+    "id": 3,
+    "name": "Yavin IV",
+    "rotation_period": "24",
+    "diameter": "10200",
+    "climate": "temperate",
+    "population": "1000",
+    "description": "A lush jungle moon orbiting the gas giant Yavin Prime, its surface dotted with ancient Massassi temples built by dark side worshippers thousands of years before the Clone Wars."
+  },
+  {
+    "id": 4,
+    "name": "Hoth",
+    "rotation_period": "23",
+    "diameter": "7200",
+    "climate": "frozen",
+    "population": "0",
+    "description": "A desolate ice planet in the Outer Rim battered by fierce blizzards, home to dangerous native creatures like wampas and tauntauns, its frozen surface hiding vast cave networks from galactic civilization."
+  },
+  {
+    "id": 5,
+    "name": "Dagobah",
+    "rotation_period": "23",
+    "diameter": "8900",
+    "climate": "murky",
+    "population": "0",
+    "description": "A remote planet covered in murky swamps, mangroves, and dense fog where life teems in every rotting log, its strong Force presence making it a place of solitude and introspection far from galactic conflicts."
+  },
+  {
+    "id": 6,
+    "name": "Bespin",
+    "rotation_period": "12",
+    "diameter": "118000",
+    "climate": "temperate",
+    "population": "6000000",
+    "description": "A majestic gas giant with a life-sustaining band in its atmosphere where Cloud City floats among the clouds, harvesting valuable tibanna gas for weapons and industrial use across the galaxy."
+  },
+  {
+    "id": 7,
+    "name": "Endor",
+    "rotation_period": "18",
+    "diameter": "4900",
+    "climate": "temperate",
+    "population": "30000000",
+    "description": "A forested moon covered in towering trees home to the primitive Ewok species, its lush wilderness and mountainous regions remaining largely unexplored by the greater galaxy during the Clone Wars."
+  },
+  {
+    "id": 8,
+    "name": "Naboo",
+    "rotation_period": "26",
+    "diameter": "12120",
+    "climate": "temperate",
+    "population": "4500000000",
+    "description": "An idyllic world with ancient swamp regions and rolling green plains, home to both human societies in elegant cities and the aquatic Gungan species living in underwater domes beneath vast lakes."
+  },
+  {
+    "id": 9,
+    "name": "Coruscant",
+    "rotation_period": "24",
+    "diameter": "12240",
+    "climate": "temperate",
+    "population": "1000000000000",
+    "description": "The galactic capital covered entirely by massive cityscape spanning thousands of levels, seat of the Republic's Senate and Jedi Temple where politicians and Jedi Masters shape the destiny of countless worlds."
+  },
+  {
+    "id": 10,
+    "name": "Kamino",
+    "rotation_period": "27",
+    "diameter": "19720",
+    "climate": "temperate",
+    "population": "1000000000",
+    "description": "An aquatic planet beyond the Outer Rim battered by constant storms, its stilted cities housing master cloners who grow armies for clients seeking genetic perfection in their soldiers."
+  },
+  {
+    "id": 11,
+    "name": "Geonosis",
+    "rotation_period": "30",
+    "diameter": "11370",
+    "climate": "temperate",
+    "population": "100000000000",
+    "description": "A rocky ringed world with arid deserts and massive industrial foundries, home to insectoid Geonosians who construct droid armies for the Separatist cause within their hollowed-out spires."
+  },
+  {
+    "id": 12,
+    "name": "Utapau",
+    "rotation_period": "27",
+    "diameter": "12900",
+    "climate": "temperate",
+    "population": "95000000",
+    "description": "A sinkhole world with massive caverns housing cities built into cliffs, its native Utai and Pau'an species living in harmony while remaining neutral observers to the galaxy's conflicts."
+  },
+  {
+    "id": 13,
+    "name": "Mustafar",
+    "rotation_period": "36",
+    "diameter": "4200",
+    "climate": "hot",
+    "population": "20000",
+    "description": "A volcanic world covered in rivers of molten lava, its rich mineral deposits attracting mining operations and a fortress belonging to a Separatist leader seeking refuge from the Clone Wars."
+  },
+  {
+    "id": 14,
+    "name": "Kashyyyk",
+    "rotation_period": "26",
+    "diameter": "12765",
+    "climate": "tropical",
+    "population": "45000000",
+    "description": "A lush jungle world covered in massive wroshyr trees reaching kilometers into the sky, home to the Wookiee species who build their cities among the branches and fiercely defend their ancient forests."
+  },
+  {
+    "id": 15,
+    "name": "Polis Massa",
+    "rotation_period": "24",
+    "diameter": "0",
+    "climate": "artificial temperate",
+    "population": "1000000",
+    "description": "An asteroid colony in the Subterrel sector used as an archaeological outpost by the Polis Massans, its sterile medical facilities serving as a refuge during the darkest days of the Clone Wars."
+  },
+  {
+    "id": 16,
+    "name": "Mygeeto",
+    "rotation_period": "12",
+    "diameter": "10088",
+    "climate": "frozen",
+    "population": "19000000",
+    "description": "A crystalline world locked in perpetual ice, its valuable minerals controlled by the InterGalactic Banking Clan, with bridges spanning frozen chasms connecting isolated cities."
+  },
+  {
+    "id": 17,
+    "name": "Felucia",
+    "rotation_period": "34",
+    "diameter": "4910",
+    "climate": "hot",
+    "population": "8500000",
+    "description": "A jungle planet covered in massive alien flora where colors shift unnaturally, its thick atmosphere and deadly indigenous creatures making it one of the most dangerous worlds in the galaxy."
+  },
+  {
+    "id": 18,
+    "name": "Cato Neimoidia",
+    "rotation_period": "25",
+    "diameter": "0",
+    "climate": "temperate",
+    "population": "10000000",
+    "description": "A planet in the Colonies region covered by ornate bridge cities spanning massive chasms, home to wealthy Neimoidian merchants who grew rich from trade federation profits."
+  },
+  {
+    "id": 19,
+    "name": "Saleucami",
+    "rotation_period": "26",
+    "diameter": "14920",
+    "climate": "hot",
+    "population": "1400000000",
+    "description": "A sparsely populated world with scattered settlements across its arid surface, its location in the Outer Rim making it a strategic battleground during the Clone Wars."
+  },
+  {
+    "id": 20,
+    "name": "Stewjon",
+    "rotation_period": "0",
+    "diameter": "0",
+    "climate": "unknown",
+    "population": "unknown",
+    "description": "A mysterious world in the Jas sector shrouded in secrecy, little documented in galactic records, known only as the birthplace of a Jedi Master who would shape the destiny of the Order."
+  }
+]

@@ -1,0 +1,162 @@
+[
+  {
+    "id": 2,
+    "name": "CR90 corvette",
+    "manufacturer": "Corellian Engineering Corporation",
+    "length": "150",
+    "crew": "30-165",
+    "max_atmosphering_speed": "950",
+    "passengers": "600",
+    "description": "A multi-role corvette renowned for its legendary modularity and speed, serving everyone from pirates to diplomats. Its eleven sublight engines allow it to outrun nearly any adversary, earning it the nickname \"Blockade Runner.\""
+  },
+  {
+    "id": 21,
+    "name": "Slave 1",
+    "manufacturer": "Kuat Systems Engineering",
+    "length": "21.5",
+    "crew": "1",
+    "max_atmosphering_speed": "1000",
+    "passengers": "6",
+    "description": "A modified Firespray-31-class patrol craft owned by Jango Fett, this deadly vessel features seismic charges, concealed weaponry, and a unique vertical flight configuration that makes it instantly recognizable across the galaxy."
+  },
+  {
+    "id": 31,
+    "name": "Republic Cruiser",
+    "manufacturer": "Corellian Engineering Corporation",
+    "length": "115",
+    "crew": "8",
+    "max_atmosphering_speed": "3000",
+    "passengers": "16",
+    "description": "The gleaming consular ship used by Jedi diplomats during the Naboo crisis, this 115-meter vessel features luxurious accommodations and diplomatic plating, though its lack of heavy weaponry reflects the Republic's peacetime posture."
+  },
+  {
+    "id": 32,
+    "name": "Droid control ship",
+    "manufacturer": "Hoersch-Kessel Drive, Inc.",
+    "length": "3170",
+    "crew": "350",
+    "max_atmosphering_speed": "0",
+    "passengers": "139000",
+    "description": "A massive Lucrehulk-class vessel serving as the mobile command center for Trade Federation droid armies. Its spherical shape houses thousands of battle droids and serves as the central nervous system for entire invasion forces."
+  },
+  {
+    "id": 39,
+    "name": "Naboo fighter",
+    "manufacturer": "Theed Palace Space Vessel Engineering Corps",
+    "length": "11",
+    "crew": "1",
+    "max_atmosphering_speed": "1100",
+    "passengers": "0",
+    "description": "A gleaming chrome starfighter with elegant curves and deadly purpose. Originally designed for ceremonial duties, these agile craft proved themselves in battle during the liberation of Naboo, featuring advanced targeting and exceptional maneuverability."
+  },
+  {
+    "id": 40,
+    "name": "J-type 327 Nubian",
+    "manufacturer": "Theed Palace Space Vessel Engineering Corps",
+    "length": "76.2",
+    "crew": "2",
+    "max_atmosphering_speed": "1300",
+    "passengers": "6",
+    "description": "Queen Amidala's majestic royal starship, sheathed in gleaming chromium and powered by a Nubian 327 hyperdrive core. This diplomatic vessel represents Naboo's wealth and sophistication while concealing advanced defensive systems."
+  },
+  {
+    "id": 41,
+    "name": "Star Destroyer",
+    "manufacturer": "Kuat Drive Yards",
+    "length": "1600",
+    "crew": "47060",
+    "max_atmosphering_speed": "975",
+    "passengers": "0",
+    "description": "The iconic dagger-shaped capital ship that projects galactic power. Imperial-class Star Destroyers carry over 9,000 crew, 20,000 soldiers, and a full wing of TIE fighters, capable of subduing entire star systems through overwhelming force."
+  },
+  {
+    "id": 43,
+    "name": "Jedi starfighter",
+    "manufacturer": "Kuat Systems Engineering",
+    "length": "8",
+    "crew": "1",
+    "max_atmosphering_speed": "1150",
+    "passengers": "0",
+    "description": "The Delta-7 Aethersprite-class starfighter used by Jedi Knights during the Clone Wars. Its triangular design bridges the aesthetic between Republic and Imperial ships, relying on an external hyperdrive ring for interstellar travel."
+  },
+  {
+    "id": 47,
+    "name": "Trade Federation cruiser",
+    "manufacturer": "Hoersch-Kessel Drive, Inc.",
+    "length": "3170",
+    "crew": "600",
+    "max_atmosphering_speed": "0",
+    "passengers": "48250",
+    "description": "A massive Lucrehulk-class battleship converted from freighters, these ring-shaped behemoths serve as the backbone of the Trade Federation's military. Their spherical core contains landing craft, droids, and enough firepower to blockade entire planets."
+  },
+  {
+    "id": 48,
+    "name": "Theta-class T-2c shuttle",
+    "manufacturer": "Cygnus Spaceworks",
+    "length": "18.5",
+    "crew": "2",
+    "max_atmosphering_speed": "2000",
+    "passengers": "4",
+    "description": "A special-order shuttle designed for Supreme Chancellor Palpatine, featuring tri-wing design and ray shielding. Used exclusively by high-ranking officials, its sleek lines and reinforced cockpit protect the galaxy's most powerful passengers."
+  },
+  {
+    "id": 52,
+    "name": "Naboo star skiff",
+    "manufacturer": "Theed Palace Space Vessel Engineering Corps",
+    "length": "29.2",
+    "crew": "2",
+    "max_atmosphering_speed": "2600",
+    "passengers": "6",
+    "description": "Senator Padmé Amidala's personal J-type transport, a boomerang-shaped vessel sheathed in chromium. More utilitarian than royal ships, it features medical facilities and concealed storage, reflecting the turbulent times of the Clone Wars."
+  },
+  {
+    "id": 58,
+    "name": "Solar Sailer",
+    "manufacturer": "Huppla Pasa Tisc Shipwrights Collective",
+    "length": "15.4",
+    "crew": "1",
+    "max_atmosphering_speed": "1600",
+    "passengers": "3",
+    "description": "Count Dooku's elegant Punworcca-116-class interstellar yacht, featuring enormous solar sails that unfurl in space. This advanced vessel combines geometric design with swift travel capabilities, reflecting its owner's aristocratic tastes."
+  },
+  {
+    "id": 59,
+    "name": "Belbullab-22 starfighter",
+    "manufacturer": "Feethan Ottraw Scalable Assemblies",
+    "length": "6.71",
+    "crew": "1",
+    "max_atmosphering_speed": "2200",
+    "passengers": "0",
+    "description": "A sturdy and agile Separatist starfighter flown by General Grievous himself. Its distinctive wing configuration and powerful engines make it a formidable opponent, withstanding punishment while delivering precise attacks against Jedi opponents."
+  },
+  {
+    "id": 63,
+    "name": "Arc-170",
+    "manufacturer": "Incom Corporation",
+    "length": "14.5",
+    "crew": "3",
+    "max_atmosphering_speed": "1000",
+    "passengers": "0",
+    "description": "A heavy starfighter used by the Republic during the Clone Wars, featuring three crew members in tandem cockpits. Its S-foil design and four engines would influence later Rebel starfighters, bridging the gap between wars."
+  },
+  {
+    "id": 66,
+    "name": "V-wing",
+    "manufacturer": "Kuat Systems Engineering",
+    "length": "7.9",
+    "crew": "1",
+    "max_atmosphering_speed": "1350",
+    "passengers": "0",
+    "description": "A V-wing starfighter used by the Republic at the Clone Wars' end. Its folding wings and twin ion engines represent the transition to Imperial technology, foreshadowing the TIE fighters that would soon dominate the galaxy."
+  },
+  {
+    "id": 68,
+    "name": "The Malevolence",
+    "manufacturer": "Subpro Corporation",
+    "length": "4845",
+    "crew": "126100",
+    "max_atmosphering_speed": "3400",
+    "passengers": "240000",
+    "description": "General Grievous's flagship and a terrifying Separatist weapon. This Subjugator-class heavy cruiser features massive ion cannons capable of disabling entire Republic fleets, living up to its malevolent name through devastating surprise attacks."
+  }
+]
