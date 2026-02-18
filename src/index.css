@@ -1,21 +1,89 @@
+/* FONTS */
+
+@font-face {
+  font-family: 'ITC Avant Garde Gothic';
+  src: url('/fonts/avantgarde_demi.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Stellar';
+  src: url('/fonts/Stellar-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Stellar';
+  src: url('/fonts/Stellar-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* TAILWIND */
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
+/* BASE STYLES */
+
 
 @layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   body {
     @apply bg-black text-primary;
     background-image: url('/images/ui/background-stars.jpg');
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
+    font-family: 'Stellar', Georgia, serif;
+    font-weight: 300;
   }
 }
 
+/* CUSTOM UTILITIES */
+
 @layer utilities {
+  .font-avant-garde {
+    font-family: 'ITC Avant Garde Gothic', Arial, sans-serif;
+  }
+
+  .font-stellar {
+    font-family: 'Stellar', Georgia, serif;
+  }
+
+  .font-stellar-light {
+    font-family: 'Stellar', Georgia, serif;
+    font-weight: 300;
+  }
+
+  .font-stellar-bold {
+    font-family: 'Stellar', Georgia, serif;
+    font-weight: 700;
+  }
+
   .glow-border {
     box-shadow: 0 0 8px rgba(247, 255, 184, 0.6);
+  }
+
+  .glow-border-hover {
+    transition: box-shadow 0.3s ease;
+  }
+
+  .glow-border-hover:hover {
+    box-shadow: 0 0 12px rgba(247, 255, 184, 0.8);
   }
 }

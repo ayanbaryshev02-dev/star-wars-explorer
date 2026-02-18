@@ -7,16 +7,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#F6F6F6', 
-        accent: '#F7FFB8', 
-      },
-      fontFamily: {
-        'avant-garde': ['"ITC Avant Garde Gothic"', 'sans-serif'],
-        'stellar': ['Stellar', 'sans-serif'],
+        primary: '#F6F6F6',
+        accent: '#F7FFB8',
       },
       maxWidth: {
         'container': '1280px',
         'content': '952px',
+      },
+      spacing: {
+        '134': '134px',
+        '149': '149px',
+        '82': '82px',
+        '130': '130px',
       },
     },
   },

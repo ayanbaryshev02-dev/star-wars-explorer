@@ -1,0 +1,20 @@
+@font-face {
+  font-family: 'ITC Avant Garde Gothic';
+  src: local('ITC Avant Garde Gothic Demi');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Stellar';
+  src: local('Stellar');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Stellar';
+  src: local('Stellar');
+  font-weight: 700;
+  font-style: normal;
+}
