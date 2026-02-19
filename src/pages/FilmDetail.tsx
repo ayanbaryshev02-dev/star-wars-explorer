@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getFilm } from '../services/swapi';
-import Pagination from '../components/Pagination';
+import DetailModal from '../components/DetailModal';
+import { filmImages } from '../constants/imageMapping';
 import type { Film } from '../types';
 
 const FilmDetail = () => {
@@ -9,8 +10,6 @@ const FilmDetail = () => {
   const navigate = useNavigate();
   const [film, setFilm] = useState<Film | null>(null);
   const [loading, setLoading] = useState(true);
-  const [isExiting, setIsExiting] = useState(false);
-  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
 
   const filmIds = [4, 5, 6];
   const currentIndex = filmIds.indexOf(Number(id));
@@ -21,7 +20,6 @@ const FilmDetail = () => {
       
       try {
         setLoading(true);
-        setSlideDirection(null);
         const data = await getFilm(Number(id));
         setFilm(data);
       } catch (error) {
@@ -34,29 +32,8 @@ const FilmDetail = () => {
     fetchFilm();
   }, [id]);
 
-  
-
-const goToFilm = (newIndex: number) => {
-  if (newIndex === currentIndex) return;
-  
-  setSlideDirection(newIndex > currentIndex ? 'left' : 'right');
-  
-  setTimeout(() => {
+  const handlePageChange = (newIndex: number) => {
     navigate(`/film/${filmIds[newIndex]}`);
-  }, 150);
-};
-
-  const handleClose = () => {
-    setIsExiting(true);
-    setTimeout(() => {
-      navigate('/');
-    }, 300);
-  };
-
-  const filmImages: Record<number, string> = {
-    4: '/images/films/episode-1.webp',
-    5: '/images/films/episode-2.webp',
-    6: '/images/films/episode-3.webp',
   };
 
   if (loading) {
@@ -67,109 +44,30 @@ const goToFilm = (newIndex: number) => {
     );
   }
 
-  if (!film) {
-    return null;
-  }
+  if (!film) return null;
 
   return (
-    <div 
-      className={`fixed inset-0 flex items-center justify-center z-50 p-8 transition-opacity duration-300 ${
-        isExiting ? 'animate-fadeOut' : 'animate-fadeIn'
-      }`}
-      onClick={handleClose}
-    >
-
-      <div 
-        className={`
-          relative border border-primary rounded-xl w-[952px] h-[476px] bg-transparent
-          transition-all duration-300
-          ${slideDirection === 'left' ? 'animate-slideOutLeft' : ''}
-          ${slideDirection === 'right' ? 'animate-slideOutRight' : ''}
-          ${!slideDirection ? 'animate-slideIn' : ''}
-        `}
-        onClick={(e) => e.stopPropagation()}
-      >
- 
-        <button
-          onClick={handleClose}
-          className="absolute top-2 right-2 w-[35px] h-[35px] flex items-center justify-center text-primary hover:text-accent transition-colors z-10"
-        >
-          <img 
-            src="/images/ui/close-button.svg"
-            alt="Close"
-            className="w-full h-full"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-              e.currentTarget.insertAdjacentHTML('afterend', '<span class="text-3xl">✕</span>');
-            }}
-          />
-        </button>
-
-  
-        <div className="flex h-full items-center">
-
-          <div className="flex-shrink-0 ml-[105px]">
-            <img 
-              src={filmImages[Number(id)] || filmImages[4]}
-              alt={film.title}
-              className="w-[234px] h-[345px] object-cover"
-            />
-          </div>
-
-
-          <div 
-            className="ml-[153px] mr-[55px]"
-            style={{ 
-              width: '405px', 
-              maxHeight: '330px',
-              marginTop: '-150px'
-            }}
-          >
-
-            <div className="mb-8" style={{ paddingTop: '24px' }}>
-              <img 
-                src="/images/ui/films-besh.svg"
-                alt=""
-                className="w-[84px] h-[10px]"
-                onError={(e) => e.currentTarget.style.display = 'none'}
-              />
-            </div>
-
-
-            <h2 className="font-avant-garde text-2xl text-primary mb-4">
-              {film.title}
-              <br />
-              <span className="text-base">(Episode {film.episode_id})</span>
-            </h2>
-
-
-            <div className="font-stellar text-sm text-accent mt-4 mb-4">
-              <p>
-                Director: {film.director} &nbsp;&nbsp;|&nbsp;&nbsp; Release Date: {film.release_date}
-              </p>
-            </div>
-
-            <div style={{ maxHeight: '220px' }}>
-              <p className="font-stellar-light text-base leading-[25px] text-primary">
-                {film.opening_crawl}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div 
-          className="absolute left-1/2 -translate-x-1/2"
-          style={{ top: 'calc(100% + 30px)' }}
-        >
-          <Pagination
-            totalItems={filmIds.length}
-            currentIndex={currentIndex}
-            onPageChange={goToFilm}
-            alwaysShowThree={false} 
-          />
-        </div>
-      </div>
-    </div>
+    <DetailModal
+      title={film.title}
+      subtitle={`(Episode ${film.episode_id})`}
+      beshIcon="/images/ui/films-besh.svg"
+      characteristics={[
+        { label: 'Director', value: film.director },
+        { label: 'Release Date', value: film.release_date }
+      ]}
+      description={film.opening_crawl}
+      contentType="film"
+      leftContent={
+        <img 
+          src={filmImages[Number(id)]}
+          alt={film.title}
+          className="w-[234px] h-[345px] object-cover"
+        />
+      }
+      totalItems={filmIds.length}
+      currentIndex={currentIndex}
+      onPageChange={handlePageChange}
+    />
   );
 };
 
