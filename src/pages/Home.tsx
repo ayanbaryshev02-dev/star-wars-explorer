@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { getFilms } from '../services/swapi';
 import FilmCard from '../components/FilmCard';
 import type { Film } from '../types';
@@ -6,6 +7,8 @@ import type { Film } from '../types';
 const Home = () => {
   const [films, setFilms] = useState<Film[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isExiting, setIsExiting] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchFilms = async () => {
@@ -23,6 +26,10 @@ const Home = () => {
     fetchFilms();
   }, []);
 
+  useEffect(() => {
+    setIsExiting(false);
+  }, [location]);
+
   const sections = [
     { id: 'characters', title: 'CHARACTERS', icon: '/images/ui/characters-icon.svg' },
     { id: 'planets', title: 'PLANETS', icon: '/images/ui/planets-icon.svg' },
@@ -35,13 +42,24 @@ const Home = () => {
     6: '/images/films/episode-3.jpg',
   };
 
+  const handleFilmClick = () => {
+    setIsExiting(true);
+  };
+
   return (
-    <div className="pt-[134px] max-w-content mx-auto px-8">
+    <div 
+      className={`
+        pt-[134px] max-w-content mx-auto px-8
+        transition-opacity duration-300
+        ${isExiting ? 'animate-fadeOut' : 'animate-fadeIn'}
+      `}
+    >
+
       <section id="films" className="mb-[149px]">
         {loading ? (
           <div className="text-primary font-stellar-light">Loading films...</div>
         ) : (
-          <div className="flex gap-[30px]">
+          <div className="flex gap-[30px]" onClick={handleFilmClick}>
             {films
               .sort((a, b) => a.episode_id - b.episode_id)
               .map((film) => {

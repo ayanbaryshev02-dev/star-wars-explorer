@@ -25,15 +25,12 @@
 }
 
 
-/* TAILWIND */
-
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
-/* BASE STYLES */
 
 
 @layer base {
@@ -43,6 +40,9 @@
     box-sizing: border-box;
   }
 
+   html {
+    overflow-y: scroll;
+  }
   body {
     @apply bg-black text-primary;
     background-image: url('/images/ui/background-stars.jpg');
@@ -54,7 +54,6 @@
   }
 }
 
-/* CUSTOM UTILITIES */
 
 @layer utilities {
   .font-avant-garde {
@@ -85,5 +84,78 @@
 
   .glow-border-hover:hover {
     box-shadow: 0 0 12px rgba(247, 255, 184, 0.8);
+  }
+}
+
+@layer utilities {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slideOutLeft {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+  }
+
+  @keyframes slideOutRight {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  .animate-fadeOut {
+    animation: fadeOut 0.3s ease-out forwards;
+  }
+
+  .animate-slideIn {
+    animation: slideIn 0.3s ease-out forwards;
+  }
+
+  .animate-slideOutLeft {
+    animation: slideOutLeft 0.3s ease-out forwards;
+  }
+
+  .animate-slideOutRight {
+    animation: slideOutRight 0.3s ease-out forwards;
   }
 }
