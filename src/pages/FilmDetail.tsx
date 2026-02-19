@@ -54,9 +54,9 @@ const goToFilm = (newIndex: number) => {
   };
 
   const filmImages: Record<number, string> = {
-    4: '/images/films/episode-1.jpg',
-    5: '/images/films/episode-2.jpg',
-    6: '/images/films/episode-3.jpg',
+    4: '/images/films/episode-1.webp',
+    5: '/images/films/episode-2.webp',
+    6: '/images/films/episode-3.webp',
   };
 
   if (loading) {
