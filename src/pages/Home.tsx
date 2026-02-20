@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import FilmsSection from '../sections/FilmsSection';
 import CharactersSection from '../sections/CharactersSection';
+import PlanetsSection from '../sections/PlanetsSection';
 
 const Home = () => {
   const [isExiting, setIsExiting] = useState(false);
@@ -25,7 +26,7 @@ const Home = () => {
     >
       <FilmsSection onCardClick={handleFilmClick} />
       <CharactersSection />
-
+      <PlanetsSection />
       {/* Planets & Starships - Coming Soon */}
       {['planets', 'starships'].map((id) => (
         <section 

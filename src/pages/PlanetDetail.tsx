@@ -1,23 +1,120 @@
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { getPlanet } from '../services/swapi';
+import DetailModal from '../components/DetailModal';
+import { planetImages, PLANET_IDS } from '../constants/imageMapping';
+import type { Planet } from '../types';
+import planetsData from '../../public/data/planets.json';
 
-const FilmDetail = () => {
-  const { id } = useParams();
+interface PlanetSettings {
+  size: number;
+  rotation: number;
+  offsetX: number;
+  offsetY: number;
+}
+
+const PLANET_SETTINGS: Record<number, PlanetSettings> = {
+  1: { size: 440, rotation: 0, offsetX: 20, offsetY: 0 },
+  2: { size: 480, rotation: 0, offsetX: 10, offsetY: 0 },
+  8: { size: 440, rotation: 0, offsetX: 30, offsetY: 0 },
+  9: { size: 450, rotation: 0, offsetX: 20, offsetY: 0 },
+  10: { size: 430, rotation: 0, offsetX: 30, offsetY: 0 },
+  11: { size: 450, rotation: 0, offsetX: 20, offsetY: 0 },
+  13: { size: 440, rotation: 0, offsetX: 30, offsetY: 0 },
+  14: { size: 440, rotation: 0, offsetX: 30, offsetY: 0 },
+  15: { size: 450, rotation: 0, offsetX: 20, offsetY: 0 },
+  16: { size: 450, rotation: 0, offsetX: 30, offsetY: 0 },
+  17: { size: 440, rotation: 0, offsetX: 30, offsetY: 0 },
+  18: { size: 420, rotation: 0, offsetX: 30, offsetY: 0 },
+  19: { size: 430, rotation: 0, offsetX: 30, offsetY: 0 },
+};
+
+const DEFAULT_SETTINGS: PlanetSettings = {
+  size: 650,
+  rotation: 0,
+  offsetX: 0,
+  offsetY: 0,
+};
+
+const PlanetDetail = () => {
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [planet, setPlanet] = useState<Planet | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const currentIndex = PLANET_IDS.indexOf(Number(id));
+
+  useEffect(() => {
+    const fetchPlanet = async () => {
+      if (!id) return;
+
+      try {
+        setLoading(true);
+        const data = await getPlanet(Number(id));
+        setPlanet(data);
+      } catch (error) {
+        console.error('Error fetching planet:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPlanet();
+  }, [id]);
+
+  const handlePageChange = (newIndex: number) => {
+    navigate(`/planet/${PLANET_IDS[newIndex]}`);
+  };
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center z-50 animate-fadeIn">
+        <div className="text-primary font-stellar-light text-xl">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!planet) return null;
+
+  const planetData = planetsData.find((p) => p.id === Number(id));
+  const isGeonosis = Number(id) === 11;
+  const imageUrl = isGeonosis
+    ? '/images/planets/geonosis.webp'
+    : planetImages[Number(id)];
+
+  const settings = PLANET_SETTINGS[Number(id)] || DEFAULT_SETTINGS;
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-black/90 border border-primary rounded-xl max-w-content w-full mx-8 p-6">
-        <button 
-          onClick={() => navigate(-1)}
-          className="absolute top-2 right-2 text-primary hover:text-accent"
-        >
-          ✕
-        </button>
-        <h2 className="text-2xl">Film Detail - ID: {id}</h2>
-        <p>Coming soon...</p>
-      </div>
-    </div>
+    <DetailModal
+      title={planet.name}
+      beshIcon="/images/ui/planets-besh.svg"
+      characteristics={[
+        { label: 'Rotation period', value: planet.rotation_period },
+        { label: 'Diameter', value: planet.diameter },
+        { label: 'Climate', value: planet.climate },
+        { label: 'Population', value: planet.population },
+      ]}
+      description={planetData?.description || 'No description available.'}
+      contentType="planet"
+      leftContent={
+        <img
+          src={imageUrl}
+          alt={planet.name}
+          className="rounded-full object-cover"
+          style={{
+            width: `${settings.size}px`,
+            height: `${settings.size}px`,
+            transform: `rotate(${settings.rotation}deg)`,
+            marginLeft: `${settings.offsetX}px`,
+            marginTop: `${settings.offsetY}px`,
+          }}
+        />
+      }
+      totalItems={PLANET_IDS.length}
+      currentIndex={currentIndex}
+      onPageChange={handlePageChange}
+    />
   );
 };
 
-export default FilmDetail;
+export default PlanetDetail;

@@ -46,3 +46,23 @@ export const CHARACTER_IDS = [
 ];
 
 export const ITEMS_PER_PAGE = 18; 
+
+export const planetImages: Record<number, string> = {
+  1: '/images/planets/tatooine.webp',
+  2: '/images/planets/alderaan.webp',
+  8: '/images/planets/naboo.webp',
+  9: '/images/planets/coruscant.webp',
+  10: '/images/planets/kamino.webp',
+  11: '/images/planets/geonosis.webp',
+  13: '/images/planets/mustafar.webp',
+  14: '/images/planets/kashyyyk.webp',
+  15: '/images/planets/polis-massa.webp',
+  16: '/images/planets/mygeeto.webp',
+  17: '/images/planets/felucia.webp',
+  18: '/images/planets/cato-neimoidia.webp',
+  19: '/images/planets/saleucami.webp',
+};
+
+export const PLANET_IDS = [1, 2, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19];
+
+export const PLANETS_PER_PAGE = 6;

@@ -22,7 +22,6 @@ const CharacterCard = ({ id, name, imageUrl }: CharacterCardProps) => {
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
     >
-      {/* Card Container - 134x156px */}
       <div 
         className={`
           w-[134px] h-[156px]
@@ -32,7 +31,7 @@ const CharacterCard = ({ id, name, imageUrl }: CharacterCardProps) => {
           ${isHovered ? 'glow-border' : ''}
         `}
       >
-        {/* Character Image - fills card */}
+
         <div className="w-full h-[134px]">
           <img 
             src={imageUrl}
@@ -41,7 +40,6 @@ const CharacterCard = ({ id, name, imageUrl }: CharacterCardProps) => {
           />
         </div>
 
-        {/* Name Container - black background at bottom */}
         <div className="w-full h-[22px] bg-black border-t border-primary/50 flex items-center justify-center px-2">
           <p className="font-stellar text-[12px] font-bold text-primary text-center truncate leading-tight">
             {name}
@@ -49,15 +47,14 @@ const CharacterCard = ({ id, name, imageUrl }: CharacterCardProps) => {
         </div>
       </div>
 
-      {/* Lightsaber Icon - appears on hover */}
       {isHovered && (
         <img 
           src="/images/ui/lightsaber-icon.svg"
           alt=""
-          className="absolute left-2 w-[70px] h-[3px] transition-all duration-300"
+          className="absolute left-0 w-[70px] h-[3px] transition-all duration-300"
           style={{ 
             top: 'calc(100% + 8px)',
-            filter: 'drop-shadow(0 0 8px rgba(247, 255, 184, 1)) drop-shadow(0 0 16px rgba(247, 255, 184, 0.8)) brightness(1.5)',
+            filter: 'drop-shadow(0 0 8px rgb(28, 100, 255)) drop-shadow(0 0 16px rgba(17, 140, 255, 0.8)) brightness(1.5)',
           }}
           onError={(e) => e.currentTarget.style.display = 'none'}
         />
