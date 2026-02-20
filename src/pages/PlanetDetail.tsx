@@ -7,35 +7,34 @@ import type { Planet } from '../types';
 import planetsData from '../../public/data/planets.json';
 
 interface PlanetSettings {
-  size: number;
+  size: { width: number; height: number };
   rotation: number;
   offsetX: number;
   offsetY: number;
 }
 
 const PLANET_SETTINGS: Record<number, PlanetSettings> = {
-  1: { size: 440, rotation: 0, offsetX: 20, offsetY: 0 },
-  2: { size: 480, rotation: 0, offsetX: 10, offsetY: 0 },
-  8: { size: 440, rotation: 0, offsetX: 30, offsetY: 0 },
-  9: { size: 450, rotation: 0, offsetX: 20, offsetY: 0 },
-  10: { size: 430, rotation: 0, offsetX: 30, offsetY: 0 },
-  11: { size: 450, rotation: 0, offsetX: 20, offsetY: 0 },
-  13: { size: 440, rotation: 0, offsetX: 30, offsetY: 0 },
-  14: { size: 440, rotation: 0, offsetX: 30, offsetY: 0 },
-  15: { size: 450, rotation: 0, offsetX: 20, offsetY: 0 },
-  16: { size: 450, rotation: 0, offsetX: 30, offsetY: 0 },
-  17: { size: 440, rotation: 0, offsetX: 30, offsetY: 0 },
-  18: { size: 420, rotation: 0, offsetX: 30, offsetY: 0 },
-  19: { size: 430, rotation: 0, offsetX: 30, offsetY: 0 },
+  1: { size: { width: 800, height: 800 }, rotation: 90, offsetX: -90, offsetY: 150 },
+  2: { size: { width: 800, height: 800 }, rotation: 20, offsetX: -90, offsetY: -120 },
+  8: { size: { width: 800, height: 800 }, rotation: 190, offsetX: -90, offsetY: 160 },
+  9: { size: { width: 800, height: 800 }, rotation: 190, offsetX: -90, offsetY: 10 },
+  10: { size: { width: 800, height: 800 }, rotation: 100, offsetX: -90, offsetY: 160 },
+  11: { size: { width: 800, height: 800 }, rotation: 0, offsetX: -120, offsetY: 0 },
+  13: { size: { width: 800, height: 800 }, rotation: 0, offsetX: -150, offsetY: -162 },
+  14: { size: { width: 800, height: 800 }, rotation: 10, offsetX: -90, offsetY: 150 },
+  15: { size: { width: 800, height: 800 }, rotation: 30, offsetX: -90, offsetY: 0 },
+  16: { size: { width: 800, height: 800 }, rotation: 0, offsetX: -150, offsetY: -162 },
+  17: { size: { width: 800, height: 800 }, rotation: 90, offsetX: -90, offsetY: 150 },
+  18: { size: { width: 800, height: 800 }, rotation: 190, offsetX: -90, offsetY: -180 },
+  19: { size: { width: 800, height: 800 }, rotation: 90, offsetX: -90, offsetY: 150 },
 };
 
 const DEFAULT_SETTINGS: PlanetSettings = {
-  size: 650,
+  size: { width: 800, height: 800 },
   rotation: 0,
-  offsetX: 0,
-  offsetY: 0,
+  offsetX: -150,
+  offsetY: -15,
 };
-
 const PlanetDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();

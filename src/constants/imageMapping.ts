@@ -39,14 +39,6 @@ export const characterImages: Record<number, string> = {
   79: '/images/characters/grievous.webp',
 };
 
-export const CHARACTER_IDS = [
-  1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 16, 20, 21, 22,
-  32, 35, 36, 42, 43, 44, 47, 51, 52, 53, 59, 60,
-  67, 68, 69, 72, 73, 79
-];
-
-export const ITEMS_PER_PAGE = 18; 
-
 export const planetImages: Record<number, string> = {
   1: '/images/planets/tatooine.webp',
   2: '/images/planets/alderaan.webp',
@@ -63,6 +55,41 @@ export const planetImages: Record<number, string> = {
   19: '/images/planets/saleucami.webp',
 };
 
+export const starshipImages: Record<number, string> = {
+  2: '/images/starships/cr90-corvette.webp',
+  3: '/images/starships/star-destroyer.webp',
+  5: '/images/starships/sentinel-landing-craft.webp',
+  9: '/images/starships/death-star.webp',
+  21: '/images/starships/slave-1.webp',
+  31: '/images/starships/republic-cruiser.webp',
+  32: '/images/starships/droid-control-ship.webp',
+  39: '/images/starships/naboo-fighter.webp',
+  40: '/images/starships/j-type-327-nubian.webp',
+  48: '/images/starships/jedi-starfighter.webp',
+  58: '/images/starships/solar-sailer.webp',
+  59: '/images/starships/trade-federation-cruiser.webp',
+  61: '/images/starships/theta-class-shuttle.webp',
+  63: '/images/starships/clone_cruiser.webp',
+  64: '/images/starships/naboo-star-skiff.webp',
+  66: '/images/starships/arc-170.webp',
+  68: '/images/starships/malevolence.webp',
+  74: '/images/starships/belbullab-22-starfighter.webp',
+  75: '/images/starships/v-wing.webp',
+};
+
+export const CHARACTER_IDS = [
+  1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 16, 20, 21, 22,
+  32, 35, 36, 42, 43, 44, 47, 51, 52, 53, 59, 60,
+  67, 68, 69, 72, 73, 79
+];
+
 export const PLANET_IDS = [1, 2, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19];
 
+export const STARSHIP_IDS = [
+  2, 3, 5, 9, 21, 31, 32, 39, 40, 48,
+  58, 59, 61, 63, 64, 66, 68, 74, 75
+];
+
+export const ITEMS_PER_PAGE = 18; 
 export const PLANETS_PER_PAGE = 6;
+export const STARSHIPS_PER_PAGE = 6;

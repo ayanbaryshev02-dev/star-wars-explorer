@@ -10,7 +10,7 @@ interface DetailModalProps {
   characteristics?: { label: string; value: string }[];
   description: string;
   leftContent: ReactNode;
-  contentType: 'film' | 'photo' | 'card' | 'planet';
+  contentType: 'film' | 'photo' | 'card' | 'planet' | 'starship';
   totalItems: number;
   currentIndex: number;
   onPageChange: (index: number) => void;
@@ -20,10 +20,11 @@ const CONTENT_MARGINS = {
   film: { left: '105px', right: '153px' },
   photo: { left: '0px', right: '61px' },
   card: { left: '63px', right: '132px' },
-  planet: { left: '0px', right: '40px' },
+  planet: { left: '0px', right: '-40px' },
+  starship: { left: '-150px', right: '-40px' },
 } as const;
 
-const PLANET_CONTAINER_WIDTH = '550px';
+const PLANET_CONTAINER_WIDTH = '570px';
 
 const DetailModal = ({
   title,
@@ -54,7 +55,7 @@ const DetailModal = ({
   };
 
   const margins = CONTENT_MARGINS[contentType];
-  const leftContainerWidth = contentType === 'planet' ? PLANET_CONTAINER_WIDTH : 'auto';
+  const leftContainerWidth = contentType === 'planet' ? PLANET_CONTAINER_WIDTH :  contentType === 'starship' ? '700px' : 'auto';
   const shouldClipContent = contentType === 'photo';
 
   return (
