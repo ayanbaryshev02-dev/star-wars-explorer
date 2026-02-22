@@ -4,6 +4,7 @@ import FilmsSection from '../sections/FilmsSection';
 import CharactersSection from '../sections/CharactersSection';
 import PlanetsSection from '../sections/PlanetsSection';
 import StarshipsSection from '../sections/StarshipsSection';
+import Footer from '../components/Footer';
 
 const Home = () => {
   const [isExiting, setIsExiting] = useState(false);
@@ -29,6 +30,7 @@ const Home = () => {
       <CharactersSection />
       <PlanetsSection />
       <StarshipsSection />
+      <Footer />
     </div>
   );
 };
