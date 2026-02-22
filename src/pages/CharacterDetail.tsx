@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getCharacter } from '../services/swapi';
 import DetailModal from '../components/DetailModal';
 import { characterImages, CHARACTER_IDS } from '../constants/imageMapping';
+import { useCardRotation } from '../hooks/useCardRotation';
 import type { Character } from '../types';
 
 import charactersData from '../../public/data/characters.json';
@@ -16,11 +17,13 @@ const CharacterDetail = () => {
   const [loading, setLoading] = useState(true);
 
   const currentIndex = CHARACTER_IDS.indexOf(Number(id));
+  const hasCard = CHARACTERS_WITH_CARDS.includes(Number(id));
+  const cardRotation = useCardRotation({ enabled: hasCard });
 
   useEffect(() => {
     const fetchCharacter = async () => {
       if (!id) return;
-      
+
       try {
         setLoading(true);
         const data = await getCharacter(Number(id));
@@ -49,13 +52,23 @@ const CharacterDetail = () => {
 
   if (!character) return null;
 
-  const characterData = charactersData.find(c => c.id === Number(id));
-  const hasCard = CHARACTERS_WITH_CARDS.includes(Number(id));
-  
+  const characterData = charactersData.find((c) => c.id === Number(id));
   const baseImageName = characterImages[Number(id)]?.split('/').pop()?.replace('.webp', '') || '';
-  const imageUrl = hasCard 
+  const imageUrl = hasCard
     ? `/images/characters-cards/${baseImageName}-card.png`
     : characterImages[Number(id)];
+
+  const cardStyle = hasCard
+    ? {
+        width: 'auto',
+        height: '388px',
+        transform: `perspective(1000px) rotateX(${cardRotation.x}deg) rotateY(${cardRotation.y}deg) rotate(6deg)`,
+        transition: 'transform 0.1s ease-out',
+      }
+    : {
+        width: '428px',
+        height: '476px',
+      };
 
   return (
     <DetailModal
@@ -64,35 +77,18 @@ const CharacterDetail = () => {
       characteristics={[
         { label: 'height', value: character.height },
         { label: 'mass', value: character.mass },
-        { label: 'birth year', value: character.birth_year }
+        { label: 'birth year', value: character.birth_year },
       ]}
       description={characterData?.description || 'No description available.'}
       contentType={hasCard ? 'card' : 'photo'}
       leftContent={
-        hasCard ? (
-
-          <img 
-            src={imageUrl}
-            alt={character.name}
-            className="object-contain"
-            style={{ 
-              width: 'auto',
-              height: '388px',
-              transform: 'rotate(6deg)'
-            }}
-          />
-        ) : (
-
-          <img 
-            src={imageUrl}
-            alt={character.name}
-            className="object-cover"
-            style={{
-              width: '428px',
-              height: '476px'
-            }}
-          />
-        )
+        <img
+          id={hasCard ? 'collectible-card' : undefined}
+          src={imageUrl}
+          alt={character.name}
+          className="object-contain"
+          style={cardStyle}
+        />
       }
       totalItems={CHARACTER_IDS.length}
       currentIndex={currentIndex}
