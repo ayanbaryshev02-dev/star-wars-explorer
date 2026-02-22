@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Lightsaber from './Lightsaber';
 
 interface PlanetCardProps {
   id: number;
@@ -38,18 +39,7 @@ const PlanetCard = ({ id, name, imageUrl }: PlanetCardProps) => {
         </h3>
       </div>
 
-      {isHovered && (
-        <img 
-          src="/images/ui/lightsaber-icon.svg"
-          alt=""
-          className="absolute right-20 w-[70px] h-[3px] transition-all duration-300 mt-4"
-          style={{ 
-            top: 'calc(100% + 8px)',
-            filter: 'drop-shadow(0 0 8px rgb(74, 255, 134)) drop-shadow(0 0 16px rgba(75, 255, 129, 0.8)) brightness(1.5)',
-          }}  
-          onError={(e) => e.currentTarget.style.display = 'none'}
-        />
-      )}
+      {isHovered && <Lightsaber color="yellow" centered className='right-10 mt-4'/>}
     </div>
   );
 };

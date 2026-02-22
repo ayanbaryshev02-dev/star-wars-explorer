@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Lightsaber from './Lightsaber';
 
 interface CharacterCardProps {
   id: number;
@@ -47,18 +48,7 @@ const CharacterCard = ({ id, name, imageUrl }: CharacterCardProps) => {
         </div>
       </div>
 
-      {isHovered && (
-        <img 
-          src="/images/ui/lightsaber-icon.svg"
-          alt=""
-          className="absolute left-0 w-[70px] h-[3px] transition-all duration-300"
-          style={{ 
-            top: 'calc(100% + 8px)',
-            filter: 'drop-shadow(0 0 8px rgb(28, 100, 255)) drop-shadow(0 0 16px rgba(17, 140, 255, 0.8)) brightness(1.5)',
-          }}
-          onError={(e) => e.currentTarget.style.display = 'none'}
-        />
-      )}
+      {isHovered && <Lightsaber color="blue" />}
     </div>
   );
 };
