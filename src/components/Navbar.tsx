@@ -10,9 +10,8 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      // Определяем активную секцию по позиции скролла
       const sections = ['films', 'characters', 'planets', 'starships'];
-      const scrollPosition = window.scrollY + 200; // Offset для активации
+      const scrollPosition = window.scrollY + 200; 
 
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -26,17 +25,15 @@ const Navbar = () => {
       }
     };
 
-    handleScroll(); // Вызываем сразу
+    handleScroll(); 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const isActive = (section: string) => {
-    // На главной странице - активная секция по скроллу
     if (location.pathname === '/') {
       return activeSection === section;
     }
-    // На страницах деталей - активная по URL
     if (section === 'films' && location.pathname.includes('/film/')) return true;
     if (section === 'characters' && location.pathname.includes('/character/')) return true;
     if (section === 'planets' && location.pathname.includes('/planet/')) return true;

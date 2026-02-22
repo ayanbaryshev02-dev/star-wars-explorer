@@ -40,7 +40,7 @@ const FilmCard = ({ id, title, episodeId, imageUrl }: FilmCardProps) => {
           />
         </div>
 
-        <h3 className="font-stellar-bold text-base text-primary text-center leading-tight">
+        <h3 className="font-stellar-light text-base text-primary text-center leading-tight">
           {title}
           <br />
           <span className="text-sm">(Episode {episodeId})</span>

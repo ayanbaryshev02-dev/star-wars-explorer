@@ -30,6 +30,9 @@ const PlanetsSection = () => {
     (currentPage + 1) * PLANETS_PER_PAGE
   );
 
+  const placeholderCount = PLANETS_PER_PAGE - displayedPlanets.length;
+  const placeholders = Array.from({ length: placeholderCount });
+
   return (
     <section 
       id="planets" 
@@ -72,7 +75,10 @@ const PlanetsSection = () => {
             />
           );
         })}
-      </div>
+        {placeholders.map((_, index) => (
+          <div key={`placeholder-${index}`} className="w-[255px] h-[299px]" />
+        ))}
+      </div>      
 
       {/* Pagination */}
       {totalPages > 1 && (

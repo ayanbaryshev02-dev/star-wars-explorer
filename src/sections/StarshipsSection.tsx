@@ -30,6 +30,9 @@ const StarshipsSection = () => {
     (currentPage + 1) * STARSHIPS_PER_PAGE
   );
 
+  const placeholderCount = STARSHIPS_PER_PAGE - displayedStarships.length;
+  const placeholders = Array.from({ length: placeholderCount });
+
   return (
     <section id="starships" className="mb-[149px]" style={{ marginTop: '130px' }}>
       {/* Header */}
@@ -68,6 +71,9 @@ const StarshipsSection = () => {
             />
           );
         })}
+        {placeholders.map((_, index) => (
+          <div key={`placeholder-${index}`} className="w-[297px] h-[282px]" />
+        ))}
       </div>
 
       {/* Pagination */}

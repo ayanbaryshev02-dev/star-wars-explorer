@@ -33,7 +33,7 @@ const PlanetCard = ({ id, name, imageUrl }: PlanetCardProps) => {
         </div>
 
 
-        <h3 className="font-stellar-bold text-base text-primary text-center pb-[18px]">
+        <h3 className="font-stellar-light text-base text-primary text-center pb-[18px]">
           {name}
         </h3>
       </div>
@@ -46,7 +46,7 @@ const PlanetCard = ({ id, name, imageUrl }: PlanetCardProps) => {
           style={{ 
             top: 'calc(100% + 8px)',
             filter: 'drop-shadow(0 0 8px rgb(74, 255, 134)) drop-shadow(0 0 16px rgba(75, 255, 129, 0.8)) brightness(1.5)',
-          }}
+          }}  
           onError={(e) => e.currentTarget.style.display = 'none'}
         />
       )}
