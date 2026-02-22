@@ -1,10 +1,42 @@
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('films');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+
+      // Определяем активную секцию по позиции скролла
+      const sections = ['films', 'characters', 'planets', 'starships'];
+      const scrollPosition = window.scrollY + 200; // Offset для активации
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    handleScroll(); // Вызываем сразу
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const isActive = (section: string) => {
-    if (section === 'films' && location.pathname === '/') return true;
+    // На главной странице - активная секция по скроллу
+    if (location.pathname === '/') {
+      return activeSection === section;
+    }
+    // На страницах деталей - активная по URL
     if (section === 'films' && location.pathname.includes('/film/')) return true;
     if (section === 'characters' && location.pathname.includes('/character/')) return true;
     if (section === 'planets' && location.pathname.includes('/planet/')) return true;
@@ -29,12 +61,18 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50">
+    <nav
+      className={`
+        fixed top-0 left-0 right-0 z-50
+        transition-all duration-300
+        ${isScrolled ? 'navbar-scrolled' : ''}
+      `}
+    >
       <div className="max-w-container mx-auto px-8 h-20 flex justify-between items-center">
         <div className="flex-shrink-0">
-          <img 
-            src="/images/ui/star-wars-logo.svg" 
-            alt="Star Wars" 
+          <img
+            src="/images/ui/star-wars-logo.svg"
+            alt="Star Wars"
             className="h-[53px] w-[118px]"
             onError={(e) => {
               const target = e.currentTarget;
@@ -58,9 +96,9 @@ const Navbar = () => {
                 ${isActive(item.section) ? 'text-accent' : 'text-primary hover:text-accent'}
               `}
             >
-              <img 
-                src={item.icon} 
-                alt="" 
+              <img
+                src={item.icon}
+                alt=""
                 className="w-4 h-4"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
