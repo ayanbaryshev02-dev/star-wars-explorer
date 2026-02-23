@@ -1,17 +1,27 @@
 import { useState, useEffect } from 'react';
 
 export type DeviceType = 
-  | 'phone-small'      // 320-375px
-  | 'phone-standard'   // 375-425px
-  | 'phone-large'      // 425-480px
-  | 'phone-landscape'  // 480-640px
-  | 'tablet-portrait'  // 640-768px
-  | 'tablet-landscape' // 768-1024px
-  | 'desktop-small'    // 1024-1280px
-  | 'desktop';         // 1280px+
+  | 'phone-small'
+  | 'phone-standard'
+  | 'phone-large'
+  | 'phone-landscape'
+  | 'tablet-portrait'
+  | 'tablet-landscape'
+  | 'desktop-small'
+  | 'desktop';
 
 export const useBreakpoint = () => {
-  const [device, setDevice] = useState<DeviceType>('desktop');
+  const [device, setDevice] = useState<DeviceType>(() => {
+    const width = typeof window !== 'undefined' ? window.innerWidth : 1280;
+    if (width < 375) return 'phone-small';
+    if (width < 425) return 'phone-standard';
+    if (width < 480) return 'phone-large';
+    if (width < 640) return 'phone-landscape';
+    if (width < 768) return 'tablet-portrait';
+    if (width < 1024) return 'tablet-landscape';
+    if (width < 1280) return 'desktop-small';
+    return 'desktop';
+  });
 
   useEffect(() => {
     const getDevice = (width: number): DeviceType => {

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useBreakpoint } from '../hooks/useBreakpoint';
-import { RESPONSIVE_CONFIG } from '../config/responsiveConfig';
-import Lightsaber from './Lightsaber';
+import { useBreakpoint } from '../../hooks/useBreakpoint';
+import { RESPONSIVE_CONFIG } from '../../config/responsiveConfig';
+import Lightsaber from '../Lightsaber';
 
 interface CharacterCardMobileProps {
   id: number;

@@ -34,7 +34,7 @@ const FilmsSectionMobile = ({ onCardClick }: FilmsSectionMobileProps) => {
   const filmId = parseInt(displayedFilm.url.match(/\/(\d+)\/?$/)?.[1] || '0');
 
   return (
-    <section id="films" className="mb-[149px]">
+    <section id="films" className="mb-[120px]">
       <div 
         className={`
           flex justify-center

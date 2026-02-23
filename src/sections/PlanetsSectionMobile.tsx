@@ -1,21 +1,22 @@
 import { useState } from 'react';
-import CharacterCard from '../components/CharacterCard';
+import PlanetCard from '../components/PlanetCard';
 import Pagination from '../components/Pagination';
-import { useCharacters } from '../hooks/useCharacters';
+import { usePlanets } from '../hooks/usePlanets';
 import { useBreakpoint } from '../hooks/useBreakpoint';
 import { RESPONSIVE_CONFIG } from '../config/responsiveConfig';
-import { characterImages } from '../constants/imageMapping';
+import { planetImages } from '../constants/imageMapping';
 
-const CharactersSectionMobile = () => {
-  const { characters, loading } = useCharacters();
+const PlanetsSectionMobile = () => {
+  const { planets, loading } = usePlanets();
   const { device } = useBreakpoint();
   const [currentPage, setCurrentPage] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
 
   const config = RESPONSIVE_CONFIG[device];
-  const itemsPerPage = config.itemsPerPage.characters;
-  const gridCols = config.gridCols.characters;
-  const cardSize = config.cardSizes.character;
+  const itemsPerPage = config.itemsPerPage.planets;
+  const gridCols = config.gridCols.planets;
+  const gapX = config.planetsGapX ?? config.gap;
+  const cardSize = config.cardSizes.planet;
 
   const handlePageChange = (newPage: number) => {
     if (newPage === currentPage) return;
@@ -27,30 +28,30 @@ const CharactersSectionMobile = () => {
   };
 
   if (loading) {
-    return <div className="text-primary font-stellar-light">Loading characters...</div>;
+    return <div className="text-primary font-stellar-light">Loading planets...</div>;
   }
 
-  const totalPages = Math.ceil(characters.length / itemsPerPage);
-  const displayedCharacters = characters.slice(
+  const totalPages = Math.ceil(planets.length / itemsPerPage);
+  const displayedPlanets = planets.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
 
-  const placeholderCount = itemsPerPage - displayedCharacters.length;
+  const placeholderCount = itemsPerPage - displayedPlanets.length;
   const placeholders = Array.from({ length: placeholderCount });
 
   return (
-    <section id="characters" className="mb-[120px]" style={{ marginTop: '130px' }}>
+    <section id="planets" className="mb-[120px]" style={{ marginTop: '120px' }}>
       <div className="mb-[50px]">
         <div className="flex items-center gap-2">
           <img 
-            src="/images/ui/characters-icon.svg" 
+            src="/images/ui/planets-icon.svg" 
             alt="" 
-            className="w-8 h-8"
-            onError={(e) => e.currentTarget.style.display = 'none'}
+            className="w-8 h-8" 
+            onError={(e) => e.currentTarget.style.display = 'none'} 
           />
           <h2 className="font-avant-garde text-[40px] leading-[40px] text-primary">
-            CHARACTERS
+            PLANETS
           </h2>
         </div>
       </div>
@@ -65,17 +66,18 @@ const CharactersSectionMobile = () => {
         `}
         style={{ 
           gridTemplateColumns: `repeat(${gridCols}, auto)`,
-          gap: '8px'
+          columnGap: `${gapX}px`,
+          rowGap: '8px'
         }}
       >
-        {displayedCharacters.map((character) => {
-          const characterId = parseInt(character.url.match(/\/(\d+)\/?$/)?.[1] || '0');
+        {displayedPlanets.map((planet) => {
+          const planetId = parseInt(planet.url.match(/\/(\d+)\/?$/)?.[1] || '0');
           return (
-            <CharacterCard
-              key={characterId}
-              id={characterId}
-              name={character.name}
-              imageUrl={characterImages[characterId]}
+            <PlanetCard
+              key={planetId}
+              id={planetId}
+              name={planet.name}
+              imageUrl={planetImages[planetId]}
             />
           );
         })}
@@ -89,10 +91,10 @@ const CharactersSectionMobile = () => {
 
       {totalPages > 1 && (
         <div className="mt-[60px] flex justify-center">
-          <Pagination
-            totalItems={totalPages}
-            currentIndex={currentPage}
-            onPageChange={handlePageChange}
+          <Pagination 
+            totalItems={totalPages} 
+            currentIndex={currentPage} 
+            onPageChange={handlePageChange} 
           />
         </div>
       )}
@@ -100,4 +102,4 @@ const CharactersSectionMobile = () => {
   );
 };
 
-export default CharactersSectionMobile;
+export default PlanetsSectionMobile;

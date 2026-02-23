@@ -1,6 +1,6 @@
 import { useBreakpoint } from '../hooks/useBreakpoint';
-import CharacterCardDesktop from './CharacterCardDesktop';
-import CharacterCardMobile from './CharacterCardMobile';
+import CharacterCardDesktop from './desktop/CharacterCardDesktop';
+import CharacterCardMobile from './mobile/CharacterCardMobile';
 
 interface CharacterCardProps {
   id: number;

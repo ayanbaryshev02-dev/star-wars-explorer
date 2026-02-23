@@ -1,21 +1,21 @@
 import { useState } from 'react';
-import CharacterCard from '../components/CharacterCard';
+import StarshipCard from '../components/StarshipCard';
 import Pagination from '../components/Pagination';
-import { useCharacters } from '../hooks/useCharacters';
+import { useStarships } from '../hooks/useStarships';
 import { useBreakpoint } from '../hooks/useBreakpoint';
 import { RESPONSIVE_CONFIG } from '../config/responsiveConfig';
-import { characterImages } from '../constants/imageMapping';
+import { starshipImages } from '../constants/imageMapping';
 
-const CharactersSectionMobile = () => {
-  const { characters, loading } = useCharacters();
+const StarshipsSectionMobile = () => {
+  const { starships, loading } = useStarships();
   const { device } = useBreakpoint();
   const [currentPage, setCurrentPage] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
 
   const config = RESPONSIVE_CONFIG[device];
-  const itemsPerPage = config.itemsPerPage.characters;
-  const gridCols = config.gridCols.characters;
-  const cardSize = config.cardSizes.character;
+  const itemsPerPage = config.itemsPerPage.starships;
+  const gridCols = config.gridCols.starships;
+  const cardSize = config.cardSizes.starship;
 
   const handlePageChange = (newPage: number) => {
     if (newPage === currentPage) return;
@@ -27,30 +27,30 @@ const CharactersSectionMobile = () => {
   };
 
   if (loading) {
-    return <div className="text-primary font-stellar-light">Loading characters...</div>;
+    return <div className="text-primary font-stellar-light">Loading starships...</div>;
   }
 
-  const totalPages = Math.ceil(characters.length / itemsPerPage);
-  const displayedCharacters = characters.slice(
+  const totalPages = Math.ceil(starships.length / itemsPerPage);
+  const displayedStarships = starships.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
 
-  const placeholderCount = itemsPerPage - displayedCharacters.length;
+  const placeholderCount = itemsPerPage - displayedStarships.length;
   const placeholders = Array.from({ length: placeholderCount });
 
   return (
-    <section id="characters" className="mb-[120px]" style={{ marginTop: '130px' }}>
+    <section id="starships" className="mb-[120px]" style={{ marginTop: '130px' }}>
       <div className="mb-[50px]">
         <div className="flex items-center gap-2">
-          <img 
-            src="/images/ui/characters-icon.svg" 
-            alt="" 
+          <img
+            src="/images/ui/starships-icon.svg"
+            alt=""
             className="w-8 h-8"
             onError={(e) => e.currentTarget.style.display = 'none'}
           />
           <h2 className="font-avant-garde text-[40px] leading-[40px] text-primary">
-            CHARACTERS
+            STARSHIPS
           </h2>
         </div>
       </div>
@@ -68,14 +68,14 @@ const CharactersSectionMobile = () => {
           gap: '8px'
         }}
       >
-        {displayedCharacters.map((character) => {
-          const characterId = parseInt(character.url.match(/\/(\d+)\/?$/)?.[1] || '0');
+        {displayedStarships.map((starship) => {
+          const starshipId = parseInt(starship.url.match(/\/(\d+)\/?$/)?.[1] || '0');
           return (
-            <CharacterCard
-              key={characterId}
-              id={characterId}
-              name={character.name}
-              imageUrl={characterImages[characterId]}
+            <StarshipCard
+              key={starshipId}
+              id={starshipId}
+              name={starship.name}
+              imageUrl={starshipImages[starshipId]}
             />
           );
         })}
@@ -100,4 +100,4 @@ const CharactersSectionMobile = () => {
   );
 };
 
-export default CharactersSectionMobile;
+export default StarshipsSectionMobile;
