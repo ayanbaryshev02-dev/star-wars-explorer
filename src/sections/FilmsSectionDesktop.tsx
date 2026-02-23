@@ -1,9 +1,6 @@
 import FilmCard from '../components/FilmCard';
 import { useFilms } from '../hooks/useFilms';
 import { filmImages } from '../constants/imageMapping';
-import { useBreakpoint } from '../hooks/useBreakpoint';
-import FilmsSectionDesktop from './FilmsSection';
-import FilmsSectionMobile from './FilmsSectionMobile';
 
 interface FilmsSectionProps {
   onCardClick: () => void;
