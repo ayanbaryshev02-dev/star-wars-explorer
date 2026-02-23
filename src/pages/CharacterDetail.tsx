@@ -71,8 +71,8 @@ const CharacterDetail = () => {
         }
     : hasCard
     ? {
-        width: '120px',
-        height: '160px',
+        width: '160px',
+        height: '200px',
         borderRadius: '0px',
       }
     : {

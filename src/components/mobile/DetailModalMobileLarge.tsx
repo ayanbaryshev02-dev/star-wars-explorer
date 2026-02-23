@@ -3,33 +3,29 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Pagination from '../Pagination';
 
-interface DetailModalMobileProps {
+interface DetailModalMobileLargeProps {
   title: string;
-  subtitle?: string;
   beshIcon: string;
   characteristics?: { label: string; value: string }[];
   description: string;
   leftContent: ReactNode;
-  contentType: 'film' | 'photo' | 'card' | 'planet' | 'starship';
   totalItems: number;
   currentIndex: number;
   onPageChange: (index: number) => void;
   sectionId?: string;
 }
 
-const DetailModalMobile = ({
+const DetailModalMobileLarge = ({
   title,
-  subtitle,
   beshIcon,
   characteristics,
   description,
   leftContent,
-  contentType,
   totalItems,
   currentIndex,
   onPageChange,
   sectionId,
-}: DetailModalMobileProps) => {
+}: DetailModalMobileLargeProps) => {
   const navigate = useNavigate();
   const [isExiting, setIsExiting] = useState(false);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
@@ -71,66 +67,52 @@ const DetailModalMobile = ({
         `}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Content */}
-        <div className="flex flex-col h-full overflow-hidden p-3">
-          {/* Top Section: Photo/Card + Info */}
-          <div className="flex gap-10 mb-10">
-            {/* Left: Photo/Poster/Card */}
-            <div 
-              className="flex-shrink-0"
-              style={{
-                borderRadius: contentType === 'film' || contentType === 'photo' || contentType === 'card' ? '10px' : '0',
-                overflow: contentType === 'film' || contentType === 'photo' || contentType === 'card' ? 'hidden' : 'visible'
-              }}
-            >
-              {leftContent}
-            </div>
+        {/* Top: Large Image (crops) */}
+        <div className="w-full h-[210px] overflow-hidden flex items-center justify-center rounded-t-xl">
+          {leftContent}
+        </div>
 
-            {/* Right: Besh + Title + Characteristics */}
-            <div className="flex-1 flex flex-col min-w-0">
-              {/* Besh Icon */}
-              <div className="mb-7">
-                <img
-                  src={beshIcon}
-                  alt=""
-                  className="h-[6px]"
-                  style={{ width: 'auto' }}
-                  onError={(e) => e.currentTarget.style.display = 'none'}
-                />
-              </div>
-
-              {/* Title */}
-              <h2 className="font-avant-garde text-[16px] text-primary mb-5 leading-[20px]">
-                {title}
-                {subtitle && (
-                  <>
-                    <br />
-                    <span className="text-sm">{subtitle}</span>
-                  </>
-                )}
-              </h2>
-
-              {/* Characteristics */}
-              {characteristics && characteristics.length > 0 && (
-                <div className="font-stellar text-[12px] text-accent leading-[20px]">
-                  {characteristics.map((char, idx) => (
-                    <div key={idx}>
-                      {char.label}: {char.value}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+        {/* Content Below Image */}
+        <div className="flex flex-col px-4 pt-3 pb-3 h-[450px]">
+          {/* Besh Icon */}
+          <div className="mb-4 flex justify-center">
+            <img
+              src={beshIcon}
+              alt=""
+              className="h-[5px]"
+              style={{ width: 'auto' }}
+              onError={(e) => e.currentTarget.style.display = 'none'}
+            />
           </div>
 
-          {/* Bottom Section: Description + Close Button */}
+          {/* Title - Centered */}
+          <h2 className="font-avant-garde text-[25px] text-primary text-center mb-6 leading-[20px]">
+            {title}
+          </h2>
+
+          {/* Characteristics - 2 Lines */}
+          {characteristics && characteristics.length > 0 && (
+            <div className="font-stellar text-[12px] text-accent leading-[20px] mb-6 text-center">
+              {characteristics.slice(0, 4).map((char, idx) => (
+                <span key={idx}>
+                  {char.label}: {char.value}
+                  {idx < 3 && idx < characteristics.length - 1 && ' | '}
+                  {idx === 1 && <br />}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Description */}
           <div className="flex-1 overflow-y-auto relative">
-            <p className="font-stellar-light text-[16px] leading-[25px] text-primary pr-2 pl-1">
+            <p className="font-stellar-light text-[16px] leading-[25px] text-primary pr-8">
               {description}
             </p>
+
+            {/* Close Button */}
             
-            {/* Close Button - Right Bottom Corner */}
-            <button
+          </div>
+          <button
               onClick={handleClose}
               className="absolute bottom-0 right-0 w-[25px] h-[25px] flex items-center justify-center text-primary hover:text-accent transition-colors"
               aria-label="Close"
@@ -145,7 +127,6 @@ const DetailModalMobile = ({
                 }}
               />
             </button>
-          </div>
         </div>
 
         {/* Pagination */}
@@ -162,4 +143,4 @@ const DetailModalMobile = ({
   );
 };
 
-export default DetailModalMobile;
+export default DetailModalMobileLarge;

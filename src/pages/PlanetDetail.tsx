@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPlanet } from '../services/swapi';
-import DetailModal from '../components/desktop/DetailModalDesktop';
+import DetailModal from '../components/DetailModal';
 import { planetImages, PLANET_IDS } from '../constants/imageMapping';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 import type { Planet } from '../types';
 import planetsData from '../../public/data/planets.json';
 
@@ -10,6 +11,11 @@ interface PlanetSettings {
   size: { width: number; height: number };
   rotation: number;
   offsetX: number;
+  offsetY: number;
+}
+
+interface PlanetSettingsMobile {
+  size: { width: number; height: number };
   offsetY: number;
 }
 
@@ -29,15 +35,38 @@ const PLANET_SETTINGS: Record<number, PlanetSettings> = {
   19: { size: { width: 800, height: 800 }, rotation: 90, offsetX: -90, offsetY: 150 },
 };
 
+const PLANET_SETTINGS_MOBILE: Record<number, PlanetSettingsMobile> = {
+  1: { size: { width: 500, height: 500 }, offsetY: -220 },
+  2: { size: { width: 500, height: 500 }, offsetY: -220 },
+  8: { size: { width: 500, height: 500 }, offsetY: -220 },
+  9: { size: { width: 500, height: 500 }, offsetY: -220 },
+  10: { size: { width: 500, height: 500 }, offsetY: -220 },
+  11: { size: { width: 500, height: 500 }, offsetY: 0 },
+  13: { size: { width: 500, height: 500 }, offsetY: -220 },
+  14: { size: { width: 500, height: 500 }, offsetY: -220 },
+  15: { size: { width: 500, height: 500 }, offsetY: -220 },
+  16: { size: { width: 500, height: 500 }, offsetY: -220 },
+  17: { size: { width: 500, height: 500 }, offsetY: -220 },
+  18: { size: { width: 500, height: 500 }, offsetY: -220 },
+  19: { size: { width: 500, height: 500 }, offsetY: -220 },
+};
+
 const DEFAULT_SETTINGS: PlanetSettings = {
   size: { width: 800, height: 800 },
   rotation: 0,
   offsetX: -150,
   offsetY: -15,
 };
+
+const DEFAULT_SETTINGS_MOBILE: PlanetSettingsMobile = {
+  size: { width: 500, height: 500 },
+  offsetY: 0,
+};
+
 const PlanetDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { isDesktop } = useBreakpoint();
   const [planet, setPlanet] = useState<Planet | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +75,6 @@ const PlanetDetail = () => {
   useEffect(() => {
     const fetchPlanet = async () => {
       if (!id) return;
-
       try {
         setLoading(true);
         const data = await getPlanet(Number(id));
@@ -57,7 +85,6 @@ const PlanetDetail = () => {
         setLoading(false);
       }
     };
-
     fetchPlanet();
   }, [id]);
 
@@ -82,6 +109,7 @@ const PlanetDetail = () => {
     : planetImages[Number(id)];
 
   const settings = PLANET_SETTINGS[Number(id)] || DEFAULT_SETTINGS;
+  const mobileSettings = PLANET_SETTINGS_MOBILE[Number(id)] || DEFAULT_SETTINGS_MOBILE;
 
   return (
     <DetailModal
@@ -96,22 +124,34 @@ const PlanetDetail = () => {
       description={planetData?.description || 'No description available.'}
       contentType="planet"
       leftContent={
-        <img
-          src={imageUrl}
-          alt={planet.name}
-          className="rounded-full object-cover"
-          style={{
-            width: `${settings.size}px`,
-            height: `${settings.size}px`,
-            transform: `rotate(${settings.rotation}deg)`,
-            marginLeft: `${settings.offsetX}px`,
-            marginTop: `${settings.offsetY}px`,
-          }}
-        />
+        isDesktop ? (
+          <img
+            src={imageUrl}
+            alt={planet.name}
+            className="rounded-full object-cover"
+            style={{
+              transform: `rotate(${settings.rotation}deg)`,
+              marginLeft: `${settings.offsetX}px`,
+              marginTop: `${settings.offsetY}px`,
+            }}
+          />
+        ) : (
+          <img
+            src={imageUrl}
+            alt={planet.name}
+            className="object-cover"
+            style={{
+              width: `${mobileSettings.size.width}px`,
+              height: `${mobileSettings.size.height}px`,
+              marginTop: `${mobileSettings.offsetY}px`,
+            }}
+          />
+        )
       }
       totalItems={PLANET_IDS.length}
       currentIndex={currentIndex}
       onPageChange={handlePageChange}
+      sectionId="planets"
     />
   );
 };

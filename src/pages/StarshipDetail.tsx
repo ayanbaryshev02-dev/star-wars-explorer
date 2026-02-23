@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getStarship } from '../services/swapi';
-import DetailModal from '../components/desktop/DetailModalDesktop';
+import DetailModal from '../components/DetailModal';
 import { starshipImages, STARSHIP_IDS } from '../constants/imageMapping';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 import type { Starship } from '../types';
-
 import starshipsData from '../../public/data/starships.json';
 
 interface StarshipSettings {
   size: { width: number; height: number };
-  rotation: number,
+  rotation: number;
   offsetX: number;
   offsetY: number;
   scaleX?: number;
@@ -38,7 +38,7 @@ const STARSHIP_SETTINGS: Record<number, StarshipSettings> = {
 };
 
 const DEFAULT_SETTINGS: StarshipSettings = {
-  size: { width: 8000, height: 445 },
+  size: { width: 800, height: 445 },
   offsetX: 0,
   offsetY: -15,
   rotation: 0,
@@ -47,6 +47,7 @@ const DEFAULT_SETTINGS: StarshipSettings = {
 const StarshipDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { isDesktop } = useBreakpoint();
   const [starship, setStarship] = useState<Starship | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -55,7 +56,6 @@ const StarshipDetail = () => {
   useEffect(() => {
     const fetchStarship = async () => {
       if (!id) return;
-
       try {
         setLoading(true);
         const data = await getStarship(Number(id));
@@ -66,7 +66,6 @@ const StarshipDetail = () => {
         setLoading(false);
       }
     };
-
     fetchStarship();
   }, [id]);
 
@@ -87,6 +86,22 @@ const StarshipDetail = () => {
   const starshipData = starshipsData.find((s) => s.id === Number(id));
   const settings = STARSHIP_SETTINGS[Number(id)] || DEFAULT_SETTINGS;
 
+  const mobileStyle = {
+    width: '250px',
+    height: '260px',
+    maxHeight: '400px',
+    objectFit: 'contain' as const,
+  };
+
+  const desktopStyle = {
+    width: `${settings.size.width}px`,
+    height: `${settings.size.height}px`,
+    transform: `rotate(${settings.rotation}deg) scaleX(${settings.scaleX || 1})`,
+    marginLeft: `${settings.offsetX}px`,
+    marginTop: `${settings.offsetY}px`,
+    objectFit: 'contain' as const,
+  };
+
   return (
     <DetailModal
       title={starship.name}
@@ -105,18 +120,13 @@ const StarshipDetail = () => {
           src={starshipImages[Number(id)]}
           alt={starship.name}
           className="object-contain"
-          style={{
-            width: `${settings.size.width}px`,
-            transform: `rotate(${settings.rotation}deg) scaleX(${settings.scaleX || 1})`,
-            height: `${settings.size.height}px`,
-            marginLeft: `${settings.offsetX}px`,
-            marginTop: `${settings.offsetY}px`,
-          }}
+          style={isDesktop ? desktopStyle : mobileStyle}
         />
       }
       totalItems={STARSHIP_IDS.length}
       currentIndex={currentIndex}
       onPageChange={handlePageChange}
+      sectionId="starships"
     />
   );
 };

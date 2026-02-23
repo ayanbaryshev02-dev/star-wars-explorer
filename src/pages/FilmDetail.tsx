@@ -48,7 +48,7 @@ const FilmDetail = () => {
 
   const imageSize = isDesktop
     ? { width: 234, height: 345 }
-    : { width: 125, height: 185 };
+    : { width: 140, height: 200 };
 
   return (
     <DetailModal

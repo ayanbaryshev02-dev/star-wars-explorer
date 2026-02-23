@@ -1,6 +1,7 @@
 import { useBreakpoint } from '../hooks/useBreakpoint';
 import DetailModalDesktop from './desktop/DetailModalDesktop';
 import DetailModalMobile from './mobile/DetailModalMobile';
+import DetailModalMobileLarge from './mobile/DetailModalMobileLarge';
 import type { ReactNode } from 'react';
 
 interface DetailModalProps {
@@ -19,12 +20,17 @@ interface DetailModalProps {
 
 const DetailModal = (props: DetailModalProps) => {
   const { isDesktop } = useBreakpoint();
+  const { contentType } = props;
 
-  return isDesktop ? (
-    <DetailModalDesktop {...props} />
-  ) : (
-    <DetailModalMobile {...props} />
-  );
+  if (isDesktop) {
+    return <DetailModalDesktop {...props} />;
+  }
+
+  if (contentType === 'planet' || contentType === 'starship') {
+    return <DetailModalMobileLarge {...props} />;
+  }
+  
+  return <DetailModalMobile {...props} />;
 };
 
 export default DetailModal;
