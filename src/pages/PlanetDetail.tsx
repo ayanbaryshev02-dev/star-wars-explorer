@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPlanet } from '../services/swapi';
-import DetailModal from '../components/DetailModal';
+import DetailModal from '../components/desktop/DetailModalDesktop';
 import { planetImages, PLANET_IDS } from '../constants/imageMapping';
 import type { Planet } from '../types';
 import planetsData from '../../public/data/planets.json';

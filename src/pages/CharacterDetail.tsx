@@ -4,8 +4,8 @@ import { getCharacter } from '../services/swapi';
 import DetailModal from '../components/DetailModal';
 import { characterImages, CHARACTER_IDS } from '../constants/imageMapping';
 import { useCardRotation } from '../hooks/useCardRotation';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 import type { Character } from '../types';
-
 import charactersData from '../../public/data/characters.json';
 
 const CHARACTERS_WITH_CARDS = [11, 2, 4, 67, 79, 51, 44, 10, 35, 21, 3, 20];
@@ -13,17 +13,17 @@ const CHARACTERS_WITH_CARDS = [11, 2, 4, 67, 79, 51, 44, 10, 35, 21, 3, 20];
 const CharacterDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { isDesktop } = useBreakpoint();
   const [character, setCharacter] = useState<Character | null>(null);
   const [loading, setLoading] = useState(true);
 
   const currentIndex = CHARACTER_IDS.indexOf(Number(id));
   const hasCard = CHARACTERS_WITH_CARDS.includes(Number(id));
-  const cardRotation = useCardRotation({ enabled: hasCard });
+  const cardRotation = useCardRotation({ enabled: hasCard && isDesktop });
 
   useEffect(() => {
     const fetchCharacter = async () => {
       if (!id) return;
-
       try {
         setLoading(true);
         const data = await getCharacter(Number(id));
@@ -34,7 +34,6 @@ const CharacterDetail = () => {
         setLoading(false);
       }
     };
-
     fetchCharacter();
   }, [id]);
 
@@ -58,16 +57,28 @@ const CharacterDetail = () => {
     ? `/images/characters-cards/${baseImageName}-card.png`
     : characterImages[Number(id)];
 
-  const cardStyle = hasCard
+  const cardStyle = isDesktop
+    ? hasCard
+      ? {
+          width: 'auto',
+          height: '388px',
+          transform: `perspective(1000px) rotateX(${cardRotation.x}deg) rotateY(${cardRotation.y}deg) rotate(6deg)`,
+          transition: 'transform 0.1s ease-out',
+        }
+      : {
+          width: '428px',
+          height: '476px',
+        }
+    : hasCard
     ? {
-        width: 'auto',
-        height: '388px',
-        transform: `perspective(1000px) rotateX(${cardRotation.x}deg) rotateY(${cardRotation.y}deg) rotate(6deg)`,
-        transition: 'transform 0.1s ease-out',
+        width: '120px',
+        height: '160px',
+        borderRadius: '0px',
       }
     : {
-        width: '428px',
-        height: '476px',
+        width: '150px',
+        height: '165px',
+        borderRadius: '10px',
       };
 
   return (
@@ -83,7 +94,7 @@ const CharacterDetail = () => {
       contentType={hasCard ? 'card' : 'photo'}
       leftContent={
         <img
-          id={hasCard ? 'collectible-card' : undefined}
+          id={hasCard && isDesktop ? 'collectible-card' : undefined}
           src={imageUrl}
           alt={character.name}
           className="object-contain"
@@ -93,6 +104,7 @@ const CharacterDetail = () => {
       totalItems={CHARACTER_IDS.length}
       currentIndex={currentIndex}
       onPageChange={handlePageChange}
+      sectionId="characters"
     />
   );
 };

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getStarship } from '../services/swapi';
-import DetailModal from '../components/DetailModal';
+import DetailModal from '../components/desktop/DetailModalDesktop';
 import { starshipImages, STARSHIP_IDS } from '../constants/imageMapping';
 import type { Starship } from '../types';
 

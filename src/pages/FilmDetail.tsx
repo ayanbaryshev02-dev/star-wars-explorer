@@ -3,11 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getFilm } from '../services/swapi';
 import DetailModal from '../components/DetailModal';
 import { filmImages } from '../constants/imageMapping';
+import { useBreakpoint } from '../hooks/useBreakpoint';
 import type { Film } from '../types';
 
 const FilmDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { isDesktop } = useBreakpoint();
   const [film, setFilm] = useState<Film | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +19,6 @@ const FilmDetail = () => {
   useEffect(() => {
     const fetchFilm = async () => {
       if (!id) return;
-      
       try {
         setLoading(true);
         const data = await getFilm(Number(id));
@@ -28,7 +29,6 @@ const FilmDetail = () => {
         setLoading(false);
       }
     };
-
     fetchFilm();
   }, [id]);
 
@@ -46,6 +46,10 @@ const FilmDetail = () => {
 
   if (!film) return null;
 
+  const imageSize = isDesktop
+    ? { width: 234, height: 345 }
+    : { width: 125, height: 185 };
+
   return (
     <DetailModal
       title={film.title}
@@ -61,12 +65,18 @@ const FilmDetail = () => {
         <img 
           src={filmImages[Number(id)]}
           alt={film.title}
-          className="w-[234px] h-[345px] object-cover"
+          className="object-cover"
+          style={{
+            width: imageSize.width,
+            height: imageSize.height,
+            borderRadius: isDesktop ? '0' : '10px'
+          }}
         />
       }
       totalItems={filmIds.length}
       currentIndex={currentIndex}
       onPageChange={handlePageChange}
+      sectionId="films"
     />
   );
 };
