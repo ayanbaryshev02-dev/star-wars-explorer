@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
 interface MobileMenuProps {
   navItems: Array<{ name: string; section: string; icon: string }>;
