@@ -37,18 +37,18 @@ const PLANET_SETTINGS: Record<number, PlanetSettings> = {
 };
 
 const PLANET_SETTINGS_MOBILE: Record<number, PlanetSettingsMobile> = {
-  1: { size: { width: 500, height: 500 }, rotation: 0, offsetY: -280 },
-  2: { size: { width: 500, height: 500 }, rotation: 0, offsetY: -260 },
-  8: { size: { width: 450, height: 450 }, rotation: 0, offsetY: -240 },
-  9: { size: { width: 500, height: 500 }, rotation: 0, offsetY: -270 },
-  10: { size: { width: 400, height: 400 }, rotation: 0, offsetY: -200 },
+  1: { size: { width: 500, height: 450 }, rotation: 0, offsetY: -260 },
+  2: { size: { width: 500, height: 500 }, rotation: 0, offsetY: -270 },
+  8: { size: { width: 450, height: 450 }, rotation: 0, offsetY: -260 },
+  9: { size: { width: 500, height: 500 }, rotation: 0, offsetY: -295 },
+  10: { size: { width: 400, height: 400 }, rotation: 0, offsetY: -210 },
   11: { size: { width: 500, height: 500 }, rotation: 0, offsetY: 0 },
   13: { size: { width: 480, height: 480 }, rotation: 0, offsetY: -270 },
-  14: { size: { width: 450, height: 450 }, rotation: 0, offsetY: -240 },
-  15: { size: { width: 350, height: 350 }, rotation: 20, offsetY: -60 },
+  14: { size: { width: 450, height: 450 }, rotation: 0, offsetY: -250 },
+  15: { size: { width: 350, height: 350 }, rotation: 20, offsetY: -70 },
   16: { size: { width: 355, height: 355 }, rotation: 60, offsetY: -150 },
   17: { size: { width: 370, height: 370 }, rotation: 150, offsetY: -165 },
-  18: { size: { width: 352, height: 352 }, rotation: -70, offsetY: -170 },
+  18: { size: { width: 352, height: 352 }, rotation: -70, offsetY: -160 },
   19: { size: { width: 360, height: 360 }, rotation: 140, offsetY: -170 },
 };
 
