@@ -92,11 +92,11 @@ const DetailModalMobileLarge = ({
 
           {/* Characteristics - 2 Lines */}
           {characteristics && characteristics.length > 0 && (
-            <div className="font-stellar text-[12px] text-accent leading-[20px] mb-6 text-center">
-              {characteristics.slice(0, 4).map((char, idx) => (
+            <div className="font-stellar text-[10px] text-accent leading-[18px] mb-6 text-center">
+              {characteristics.slice(0, 5).map((char, idx) => (
                 <span key={idx}>
                   {char.label}: {char.value}
-                  {idx < 3 && idx < characteristics.length - 1 && ' | '}
+                  {idx < 4 && idx < characteristics.length - 1 && ' | '}
                   {idx === 1 && <br />}
                 </span>
               ))}
@@ -114,7 +114,7 @@ const DetailModalMobileLarge = ({
           </div>
           <button
               onClick={handleClose}
-              className="absolute bottom-0 right-0 w-[25px] h-[25px] flex items-center justify-center text-primary hover:text-accent transition-colors"
+              className="absolute bottom-2 right-2 w-[25px] h-[25px] flex items-center justify-center text-primary hover:text-accent transition-colors"
               aria-label="Close"
             >
               <img

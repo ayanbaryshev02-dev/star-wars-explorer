@@ -16,6 +16,7 @@ interface PlanetSettings {
 
 interface PlanetSettingsMobile {
   size: { width: number; height: number };
+  rotation: number;
   offsetY: number;
 }
 
@@ -36,19 +37,19 @@ const PLANET_SETTINGS: Record<number, PlanetSettings> = {
 };
 
 const PLANET_SETTINGS_MOBILE: Record<number, PlanetSettingsMobile> = {
-  1: { size: { width: 500, height: 500 }, offsetY: -220 },
-  2: { size: { width: 500, height: 500 }, offsetY: -220 },
-  8: { size: { width: 500, height: 500 }, offsetY: -220 },
-  9: { size: { width: 500, height: 500 }, offsetY: -220 },
-  10: { size: { width: 500, height: 500 }, offsetY: -220 },
-  11: { size: { width: 500, height: 500 }, offsetY: 0 },
-  13: { size: { width: 500, height: 500 }, offsetY: -220 },
-  14: { size: { width: 500, height: 500 }, offsetY: -220 },
-  15: { size: { width: 500, height: 500 }, offsetY: -220 },
-  16: { size: { width: 500, height: 500 }, offsetY: -220 },
-  17: { size: { width: 500, height: 500 }, offsetY: -220 },
-  18: { size: { width: 500, height: 500 }, offsetY: -220 },
-  19: { size: { width: 500, height: 500 }, offsetY: -220 },
+  1: { size: { width: 500, height: 500 }, rotation: 0, offsetY: -280 },
+  2: { size: { width: 500, height: 500 }, rotation: 0, offsetY: -260 },
+  8: { size: { width: 450, height: 450 }, rotation: 0, offsetY: -240 },
+  9: { size: { width: 500, height: 500 }, rotation: 0, offsetY: -270 },
+  10: { size: { width: 400, height: 400 }, rotation: 0, offsetY: -200 },
+  11: { size: { width: 500, height: 500 }, rotation: 0, offsetY: 0 },
+  13: { size: { width: 480, height: 480 }, rotation: 0, offsetY: -270 },
+  14: { size: { width: 450, height: 450 }, rotation: 0, offsetY: -240 },
+  15: { size: { width: 350, height: 350 }, rotation: 20, offsetY: -60 },
+  16: { size: { width: 355, height: 355 }, rotation: 60, offsetY: -150 },
+  17: { size: { width: 370, height: 370 }, rotation: 150, offsetY: -165 },
+  18: { size: { width: 352, height: 352 }, rotation: -70, offsetY: -170 },
+  19: { size: { width: 360, height: 360 }, rotation: 140, offsetY: -170 },
 };
 
 const DEFAULT_SETTINGS: PlanetSettings = {
@@ -61,6 +62,7 @@ const DEFAULT_SETTINGS: PlanetSettings = {
 const DEFAULT_SETTINGS_MOBILE: PlanetSettingsMobile = {
   size: { width: 500, height: 500 },
   offsetY: 0,
+  rotation: 0,
 };
 
 const PlanetDetail = () => {
@@ -144,6 +146,7 @@ const PlanetDetail = () => {
               width: `${mobileSettings.size.width}px`,
               height: `${mobileSettings.size.height}px`,
               marginTop: `${mobileSettings.offsetY}px`,
+               transform: `rotate(${mobileSettings.rotation}deg)`,
             }}
           />
         )

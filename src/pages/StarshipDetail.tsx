@@ -15,6 +15,14 @@ interface StarshipSettings {
   scaleX?: number;
 }
 
+interface StarshipSettingsMobile {
+  size: { width: number; height: number };
+  rotation: number;
+  offsetX: number;
+  offsetY: number;
+  scaleX?: number;
+}
+
 const STARSHIP_SETTINGS: Record<number, StarshipSettings> = {
   2: { size: { width: 800, height: 800 }, rotation: 10, offsetX: -90, offsetY: -15, scaleX: -1 },
   3: { size: { width: 900, height: 900 }, rotation: 12, offsetX: 0, offsetY: 30, scaleX: -1 },
@@ -39,6 +47,35 @@ const STARSHIP_SETTINGS: Record<number, StarshipSettings> = {
 
 const DEFAULT_SETTINGS: StarshipSettings = {
   size: { width: 800, height: 445 },
+  offsetX: 0,
+  offsetY: -15,
+  rotation: 0,
+};
+
+const STARSHIP_SETTINGS_MOBILE: Record<number, StarshipSettingsMobile> = {
+  2: { size: { width: 320, height: 320 }, rotation: 5, offsetX: 0, offsetY: -5, scaleX: 1 },
+  3: { size: { width: 320, height: 320 }, rotation: 15, offsetX: 6, offsetY: 30, scaleX: -1 },
+  5: { size: { width: 300, height: 255 }, rotation: 0, offsetX: 0, offsetY: 20, scaleX: -1 },
+  9: { size: { width: 400, height: 405 }, rotation: 0, offsetX: 0, offsetY: 160 },
+  21: { size: { width: 220, height: 200 }, rotation: 0, offsetX: 0, offsetY: 10 },
+  31: { size: { width: 809, height: 845 }, rotation: 10, offsetX: 0, offsetY: 0 },
+  32: { size: { width: 589, height: 545 }, rotation: 0, offsetX: 0, offsetY: 0, scaleX: 1 },
+  39: { size: { width: 300, height: 400 }, rotation: 0, offsetX: 0, offsetY: 5, scaleX: 1 },
+  40: { size: { width: 300, height: 350 }, rotation: 0, offsetX: 0, offsetY: 0, scaleX: -1 },
+  48: { size: { width: 250, height: 250 }, rotation: 0, offsetX: 0, offsetY: 0, scaleX: -1 },
+  58: { size: { width: 300, height: 300 }, rotation: 20, offsetX: 0, offsetY: 0, scaleX: -1 },
+  59: { size: { width: 300, height: 300 }, rotation: 0, offsetX: 0, offsetY: 30 },
+  61: { size: { width: 400, height: 400 }, rotation: 0, offsetX: 0, offsetY: -15, scaleX: 1 },
+  63: { size: { width: 300, height: 250 }, rotation: 10, offsetX: 0, offsetY: 0, scaleX: 1 },
+  64: { size: { width: 200, height: 205 }, rotation: 0, offsetX: 0, offsetY: 0 },
+  66: { size: { width: 300, height: 345 }, rotation: -20, offsetX: 10, offsetY: -15 },
+  68: { size: { width: 400, height: 400 }, rotation: 5, offsetX: 0, offsetY: 0, scaleX: -1 },
+  74: { size: { width: 200, height: 200 }, rotation: 0, offsetX: 0, offsetY: 0, scaleX: -1 },
+  75: { size: { width: 220, height: 220 }, rotation: 0, offsetX: 30, offsetY: 0 },
+};
+
+const DEFAULT_SETTINGS_MOBILE: StarshipSettings = {
+  size: { width: 400, height: 400 },
   offsetX: 0,
   offsetY: -15,
   rotation: 0,
@@ -85,11 +122,14 @@ const StarshipDetail = () => {
 
   const starshipData = starshipsData.find((s) => s.id === Number(id));
   const settings = STARSHIP_SETTINGS[Number(id)] || DEFAULT_SETTINGS;
+   const mobileSettings = STARSHIP_SETTINGS_MOBILE[Number(id)] || DEFAULT_SETTINGS_MOBILE;
 
   const mobileStyle = {
-    width: '250px',
-    height: '260px',
-    maxHeight: '400px',
+    width: `${mobileSettings.size.width}px`,
+    height: `${mobileSettings.size.height}px`,
+    transform: `rotate(${mobileSettings.rotation}deg) scaleX(${mobileSettings.scaleX || 1})`,
+    marginLeft: `${mobileSettings.offsetX}px`,
+    marginTop: `${mobileSettings.offsetY}px`,
     objectFit: 'contain' as const,
   };
 
