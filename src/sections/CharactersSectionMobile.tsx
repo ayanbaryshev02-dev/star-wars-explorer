@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import CharacterCard from '../components/CharacterCard';
 import Pagination from '../components/Pagination';
 import { useCharacters } from '../hooks/useCharacters';
@@ -11,6 +11,11 @@ const CharactersSectionMobile = () => {
   const { device } = useBreakpoint();
   const [currentPage, setCurrentPage] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
+  
+  // Swipe state
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const config = RESPONSIVE_CONFIG[device];
   const itemsPerPage = config.itemsPerPage.characters;
@@ -24,6 +29,33 @@ const CharactersSectionMobile = () => {
       setCurrentPage(newPage);
       setSlideDirection(null);
     }, 150);
+  };
+
+  // Swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const swipeDistance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+    
+    const totalPages = Math.ceil(characters.length / itemsPerPage);
+    
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0 && currentPage < totalPages - 1) {
+        handlePageChange(currentPage + 1);
+      } else if (swipeDistance < 0 && currentPage > 0) {
+        handlePageChange(currentPage - 1);
+      }
+    }
+    
+    touchStartX.current = 0;
+    touchEndX.current = 0;
   };
 
   if (loading) {
@@ -56,6 +88,10 @@ const CharactersSectionMobile = () => {
       </div>
 
       <div 
+        ref={containerRef}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         className={`
           grid justify-center
           transition-all duration-300
@@ -65,7 +101,8 @@ const CharactersSectionMobile = () => {
         `}
         style={{ 
           gridTemplateColumns: `repeat(${gridCols}, auto)`,
-          gap: '8px'
+          gap: '8px',
+          touchAction: 'pan-y'
         }}
       >
         {displayedCharacters.map((character) => {
