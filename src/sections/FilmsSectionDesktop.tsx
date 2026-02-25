@@ -2,11 +2,7 @@ import FilmCard from '../components/FilmCard';
 import { useFilms } from '../hooks/useFilms';
 import { filmImages } from '../constants/imageMapping';
 
-interface FilmsSectionProps {
-  onCardClick: () => void;
-}
-
-const FilmsSection = ({ onCardClick }: FilmsSectionProps) => {
+const FilmsSection = () => {
   
   const { films, loading } = useFilms();
 
@@ -16,7 +12,7 @@ const FilmsSection = ({ onCardClick }: FilmsSectionProps) => {
 
   return (
     <section id="films" className="mb-[149px]">
-      <div className="flex gap-[30px]" onClick={onCardClick}>
+      <div className="flex gap-[30px]">
         {films.map((film) => {
           const filmId = parseInt(film.url.match(/\/(\d+)\/?$/)?.[1] || '0');
           return (

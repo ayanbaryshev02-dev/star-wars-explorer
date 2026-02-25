@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import Lightsaber from './Lightsaber';
 
 interface FilmCardProps {
@@ -10,11 +10,11 @@ interface FilmCardProps {
 }
 
 const FilmCard = ({ id, title, episodeId, imageUrl }: FilmCardProps) => {
-  const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {
-    navigate(`/film/${id}`);
+    setSearchParams({ type: 'film', id: String(id) });
   };
 
   return (

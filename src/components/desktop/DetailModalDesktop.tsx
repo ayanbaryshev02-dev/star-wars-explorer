@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Pagination from '../Pagination';
 
 interface DetailModalDesktopProps {
@@ -14,6 +13,7 @@ interface DetailModalDesktopProps {
   totalItems: number;
   currentIndex: number;
   onPageChange: (index: number) => void;
+  onClose: () => void;
   sectionId?: string;
 }
 
@@ -38,20 +38,15 @@ const DetailModalDesktop = ({
   totalItems,
   currentIndex,
   onPageChange,
-  sectionId,
+  onClose,
 }: DetailModalDesktopProps) => {
-  const navigate = useNavigate();
   const [isExiting, setIsExiting] = useState(false);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
 
   const handleClose = () => {
     setIsExiting(true);
     setTimeout(() => {
-      if (sectionId) {
-        navigate(`/#${sectionId}`);
-      } else {
-        navigate('/');
-      }
+      onClose();
     }, 300);
   };
 

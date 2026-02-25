@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef } from 'react';
 import Pagination from '../Pagination';
 
 interface DetailModalMobileProps {
@@ -14,6 +13,7 @@ interface DetailModalMobileProps {
   totalItems: number;
   currentIndex: number;
   onPageChange: (index: number) => void;
+  onClose: () => void;
   sectionId?: string;
 }
 
@@ -28,20 +28,18 @@ const DetailModalMobile = ({
   totalItems,
   currentIndex,
   onPageChange,
-  sectionId,
+  onClose,
 }: DetailModalMobileProps) => {
-  const navigate = useNavigate();
   const [isExiting, setIsExiting] = useState(false);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
+
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
 
   const handleClose = () => {
     setIsExiting(true);
     setTimeout(() => {
-      if (sectionId) {
-        navigate(`/#${sectionId}`);
-      } else {
-        navigate('/');
-      }
+      onClose();
     }, 300);
   };
 
@@ -49,6 +47,32 @@ const DetailModalMobile = ({
     if (newIndex === currentIndex) return;
     setSlideDirection(newIndex > currentIndex ? 'left' : 'right');
     setTimeout(() => onPageChange(newIndex), 150);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const swipeDistance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0) {
+        const nextIndex = currentIndex < totalItems - 1 ? currentIndex + 1 : 0;
+        handlePageChange(nextIndex);
+      } else {
+        const prevIndex = currentIndex > 0 ? currentIndex - 1 : totalItems - 1;
+        handlePageChange(prevIndex);
+      }
+    }
+
+    touchStartX.current = 0;
+    touchEndX.current = 0;
   };
 
   return (
@@ -59,23 +83,27 @@ const DetailModalMobile = ({
         ${isExiting ? 'animate-fadeOut' : 'animate-fadeIn'}
       `}
       onClick={handleClose}
+      style={{ touchAction: 'none', overscrollBehavior: 'none' }}
     >
       <div
         className={`
           relative border border-primary rounded-xl
-          w-[350px] h-[600px] bg-black
+          w-[350px] h-[600px] bg-transparent
           transition-all duration-300
           ${slideDirection === 'left' ? 'animate-slideOutLeft' : ''}
           ${slideDirection === 'right' ? 'animate-slideOutRight' : ''}
           ${!slideDirection ? 'animate-slideIn' : ''}
         `}
         onClick={(e) => e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        style={{ touchAction: 'none', overscrollBehavior: 'contain' }}
       >
-        {/* Content */}
         <div className="flex flex-col h-full overflow-hidden p-3">
-          {/* Top Section: Photo/Card + Info */}
+
           <div className="flex gap-10 mb-10">
-            {/* Left: Photo/Poster/Card */}
+
             <div 
               className="flex-shrink-0"
               style={{
@@ -86,9 +114,8 @@ const DetailModalMobile = ({
               {leftContent}
             </div>
 
-            {/* Right: Besh + Title + Characteristics */}
             <div className="flex-1 flex flex-col min-w-0">
-              {/* Besh Icon */}
+
               <div className="mb-7">
                 <img
                   src={beshIcon}
@@ -99,7 +126,6 @@ const DetailModalMobile = ({
                 />
               </div>
 
-              {/* Title */}
               <h2 className="font-avant-garde text-[16px] text-primary mb-5 leading-[20px]">
                 {title}
                 {subtitle && (
@@ -110,7 +136,6 @@ const DetailModalMobile = ({
                 )}
               </h2>
 
-              {/* Characteristics */}
               {characteristics && characteristics.length > 0 && (
                 <div className="font-stellar text-[12px] text-accent leading-[20px]">
                   {characteristics.map((char, idx) => (
@@ -123,13 +148,14 @@ const DetailModalMobile = ({
             </div>
           </div>
 
-          {/* Bottom Section: Description + Close Button */}
-          <div className="flex-1 overflow-y-auto relative">
+          <div
+            className="flex-1 overflow-y-auto relative"
+            style={{ touchAction: 'pan-y', overscrollBehavior: 'contain' }}
+          >
             <p className="font-stellar-light text-[16px] leading-[25px] text-primary pr-2 pl-1">
               {description}
             </p>
-            
-            {/* Close Button - Right Bottom Corner */}
+
             <button
               onClick={handleClose}
               className="absolute bottom-0 right-0 w-[25px] h-[25px] flex items-center justify-center text-primary hover:text-accent transition-colors"
@@ -148,7 +174,6 @@ const DetailModalMobile = ({
           </div>
         </div>
 
-        {/* Pagination */}
         <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 'calc(100% + 20px)' }}>
           <Pagination
             totalItems={totalItems}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import Lightsaber from '../Lightsaber';
 
 interface StarshipCardProps {
@@ -9,11 +9,11 @@ interface StarshipCardProps {
 }
 
 const StarshipCard = ({ id, name, imageUrl }: StarshipCardProps) => {
-  const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {
-    navigate(`/starship/${id}`);
+    setSearchParams({ type: 'starship', id: String(id) });
   };
 
   return (

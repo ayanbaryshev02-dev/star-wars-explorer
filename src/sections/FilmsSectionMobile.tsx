@@ -4,11 +4,7 @@ import Pagination from '../components/Pagination';
 import { useFilms } from '../hooks/useFilms';
 import { filmImages } from '../constants/imageMapping';
 
-interface FilmsSectionMobileProps {
-  onCardClick: () => void;
-}
-
-const FilmsSectionMobile = ({ onCardClick }: FilmsSectionMobileProps) => {
+const FilmsSectionMobile = () => {
   const { films, loading } = useFilms();
   const [currentPage, setCurrentPage] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
@@ -78,7 +74,6 @@ const FilmsSectionMobile = ({ onCardClick }: FilmsSectionMobileProps) => {
           ${!slideDirection ? 'animate-slideIn' : ''}
         `}
         style={{ touchAction: 'pan-y' }}
-        onClick={onCardClick}
       >
         <FilmCard
           id={filmId}
