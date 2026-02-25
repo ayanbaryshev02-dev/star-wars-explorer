@@ -58,6 +58,11 @@ const DetailModalMobile = ({
   };
 
   const handleTouchEnd = () => {
+    if (touchEndX.current === 0) {
+      touchStartX.current = 0;
+      return;
+    }
+
     const swipeDistance = touchStartX.current - touchEndX.current;
     const minSwipeDistance = 50;
 
