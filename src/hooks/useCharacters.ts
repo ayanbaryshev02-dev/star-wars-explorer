@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getCharacter } from '../services/swapi';
+import { getCharacters } from '../services/swapi';
 import { CHARACTER_IDS } from '../constants/imageMapping';
 import type { Character } from '../types';
 
@@ -12,8 +12,7 @@ export const useCharacters = () => {
     const fetchCharacters = async () => {
       try {
         setLoading(true);
-        const promises = CHARACTER_IDS.map(id => getCharacter(id));
-        const data = await Promise.all(promises);
+        const data = await getCharacters(CHARACTER_IDS);
         setCharacters(data);
       } catch (err) {
         setError('Failed to load characters');
