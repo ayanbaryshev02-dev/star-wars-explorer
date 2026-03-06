@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getFilm, getCharacter, getPlanet, getStarship } from '../services/swapi';
 import { CHARACTER_IDS, PLANET_IDS, STARSHIP_IDS } from '../constants/imageMapping';
 import { FILM_IDS } from '../constants/detailSettings';
@@ -29,10 +30,30 @@ const FETCHERS: Record<string, (id: number) => Promise<unknown>> = {
   starship: getStarship,
 };
 
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 200 : -200,
+    opacity: 0,
+    scale: 0.95,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? -200 : 200,
+    opacity: 0,
+    scale: 0.95,
+  }),
+};
+
 const DetailOverlay = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [entity, setEntity] = useState<EntityData | null>(null);
   const [loading, setLoading] = useState(false);
+  const fetchIdRef = useRef(0);
+  const directionRef = useRef(0);
 
   const type = searchParams.get('type');
   const id = searchParams.get('id');
@@ -45,21 +66,32 @@ const DetailOverlay = () => {
   const handlePageChange = useCallback((newIndex: number) => {
     if (!type) return;
     const ids = IDS_MAP[type];
-    if (ids) setSearchParams({ type, id: String(ids[newIndex]) });
-  }, [type, setSearchParams]);
+    if (!ids) return;
+
+    const currentIndex = ids.indexOf(numId);
+    directionRef.current = newIndex > currentIndex ? 1 : -1;
+
+    setSearchParams({ type, id: String(ids[newIndex]) });
+  }, [type, numId, setSearchParams]);
 
   useEffect(() => {
     if (!type || !id || !FETCHERS[type]) return;
+
+    const currentFetchId = ++fetchIdRef.current;
 
     const fetchData = async () => {
       setLoading(true);
       try {
         const data = await FETCHERS[type](numId);
-        setEntity({ type, data } as EntityData);
+        if (currentFetchId === fetchIdRef.current) {
+          setEntity({ type, data } as EntityData);
+          setLoading(false);
+        }
       } catch (error) {
-        console.error(`Error fetching ${type}:`, error);
-      } finally {
-        setLoading(false);
+        if (currentFetchId === fetchIdRef.current) {
+          console.error(`Error fetching ${type}:`, error);
+          setLoading(false);
+        }
       }
     };
 
@@ -68,28 +100,46 @@ const DetailOverlay = () => {
 
   if (!type || !id) return null;
 
-  if (loading) {
+  if (loading || !entity || entity.type !== type) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center z-50 animate-fadeIn">
-        <div className="text-primary font-stellar-light text-xl">Loading...</div>
+      <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="text-primary font-stellar text-xl">Loading...</div>
       </div>
     );
   }
 
-  if (!entity || entity.type !== type) return null;
-
   const props = { id: numId, onPageChange: handlePageChange, onClose: handleClose };
+  const overlayKey = `${type}-${numId}`;
 
-  switch (entity.type) {
-    case 'film':
-      return <FilmOverlay film={entity.data} {...props} />;
-    case 'character':
-      return <CharacterOverlay character={entity.data} {...props} />;
-    case 'planet':
-      return <PlanetOverlay planet={entity.data} {...props} />;
-    case 'starship':
-      return <StarshipOverlay starship={entity.data} {...props} />;
-  }
+  const renderOverlay = () => {
+    switch (entity.type) {
+      case 'film':
+        return <FilmOverlay film={entity.data} {...props} />;
+      case 'character':
+        return <CharacterOverlay character={entity.data} {...props} />;
+      case 'planet':
+        return <PlanetOverlay planet={entity.data} {...props} />;
+      case 'starship':
+        return <StarshipOverlay starship={entity.data} {...props} />;
+    }
+  };
+
+  return (
+    <AnimatePresence mode="wait" custom={directionRef.current}>
+      <motion.div
+        key={overlayKey}
+        custom={directionRef.current}
+        variants={slideVariants}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        transition={{ duration: 0.25, ease: 'easeInOut' }}
+        style={{ position: 'fixed', inset: 0, zIndex: 50 }}
+      >
+        {renderOverlay()}
+      </motion.div>
+    </AnimatePresence>
+  );
 };
 
 export default DetailOverlay;

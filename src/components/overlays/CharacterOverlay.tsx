@@ -21,7 +21,7 @@ const CharacterOverlay = ({ character, id, onPageChange, onClose }: CharacterOve
   const characterData = charactersData.find((c) => c.id === id);
   const baseImageName = characterImages[id]?.split('/').pop()?.replace('.webp', '') || '';
   const imageUrl = hasCard
-    ? `/images/characters-cards/${baseImageName}-card.png`
+    ? `/images/characters-cards/${baseImageName}-card.webp`
     : characterImages[id];
 
   const cardStyle = isDesktop

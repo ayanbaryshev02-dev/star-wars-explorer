@@ -27,26 +27,25 @@ const DetailModalMobileLarge = ({
   onClose,
 }: DetailModalMobileLargeProps) => {
   const [isExiting, setIsExiting] = useState(false);
-  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
 
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
 
   const handleClose = () => {
-    setIsExiting(true);
-    setTimeout(() => {
-      onClose();
-    }, 300);
+  setIsExiting(true);
+  setTimeout(() => {
+    onClose();
+  }, 300);
   };
 
   const handlePageChange = (newIndex: number) => {
     if (newIndex === currentIndex) return;
-    setSlideDirection(newIndex > currentIndex ? 'left' : 'right');
-    setTimeout(() => onPageChange(newIndex), 150);
+    onPageChange(newIndex);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = 0;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
@@ -87,14 +86,7 @@ const DetailModalMobileLarge = ({
       style={{ touchAction: 'none', overscrollBehavior: 'none' }}
     >
       <div
-        className={`
-          relative border border-primary rounded-xl
-          w-[350px] h-[600px] bg-transparent
-          transition-all duration-300
-          ${slideDirection === 'left' ? 'animate-slideOutLeft' : ''}
-          ${slideDirection === 'right' ? 'animate-slideOutRight' : ''}
-          ${!slideDirection ? 'animate-slideIn' : ''}
-        `}
+        className="relative border border-primary rounded-xl w-[350px] h-[600px] bg-transparent animate-slideIn"
         onClick={(e) => e.stopPropagation()}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -137,7 +129,7 @@ const DetailModalMobileLarge = ({
             className="flex-1 overflow-y-auto relative"
             style={{ touchAction: 'pan-y', overscrollBehavior: 'contain' }}
           >
-            <p className="font-stellar-light text-[16px] leading-[25px] text-primary pr-8">
+            <p className="font-stellar text-[16px] leading-[25px] text-primary pr-8">
               {description}
             </p>
             

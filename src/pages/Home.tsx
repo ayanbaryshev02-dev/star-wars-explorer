@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useBreakpoint } from '../hooks/useBreakpoint';
+import { useImagePreloader } from '../hooks/useImagePreloader';
 import FilmsSection from '../sections/FilmsSection';
 import CharactersSection from '../sections/CharactersSection';
 import PlanetsSection from '../sections/PlanetsSection';
@@ -12,6 +13,8 @@ const Home = () => {
   const { isDesktop } = useBreakpoint();
   const [searchParams] = useSearchParams();
   const isModalOpen = searchParams.has('type') && searchParams.has('id');
+
+  useImagePreloader();
 
   useEffect(() => {
     if (isModalOpen) {
