@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Pagination from '../Pagination';
 
 interface DetailModalDesktopProps {
@@ -41,6 +41,8 @@ const DetailModalDesktop = ({
   onClose,
 }: DetailModalDesktopProps) => {
   const [isExiting, setIsExiting] = useState(false);
+  const wheelCooldown = useRef(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => {
     setIsExiting(true);
@@ -51,6 +53,32 @@ const DetailModalDesktop = ({
     if (newIndex === currentIndex) return;
     onPageChange(newIndex);
   };
+
+  useEffect(() => {
+    const el = overlayRef.current;
+    if (!el) return;
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (wheelCooldown.current) return;
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (Math.abs(delta) < 30) return;
+
+      wheelCooldown.current = true;
+      setTimeout(() => { wheelCooldown.current = false; }, 400);
+
+      if (delta > 0) {
+        const next = currentIndex < totalItems - 1 ? currentIndex + 1 : 0;
+        onPageChange(next);
+      } else {
+        const prev = currentIndex > 0 ? currentIndex - 1 : totalItems - 1;
+        onPageChange(prev);
+      }
+    };
+
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, [currentIndex, totalItems, onPageChange]);
 
   const margins = CONTENT_MARGINS[contentType];
   const leftContainerWidth = contentType === 'planet' ? PLANET_CONTAINER_WIDTH : contentType === 'starship' ? '700px' : 'auto';
@@ -64,6 +92,7 @@ const DetailModalDesktop = ({
         ${isExiting ? 'animate-fadeOut' : 'animate-fadeIn'}
       `}
       onClick={handleClose}
+      ref={overlayRef}
     >
       <div
         className="relative border border-primary rounded-xl w-[952px] h-[476px] bg-transparent animate-slideIn"
