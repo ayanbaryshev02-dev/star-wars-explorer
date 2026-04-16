@@ -10,7 +10,7 @@
 
 ## 🔗 Live Demo
 
-**[star-wars-explorer.vercel.app](https://star-wars-explorer.vercel.app)**
+**[star-wars-explorer-chi.vercel.app](https://star-wars-explorer-chi.vercel.app/)**
 
 ## 📸 Preview
 
