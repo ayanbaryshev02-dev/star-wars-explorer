@@ -11,16 +11,16 @@ interface LayoutConfig {
   padding: number;
   gap: number;
   gridCols: {
-    films: number;
-    characters: number;
-    planets: number;
-    starships: number;
+  films: number;
+  characters: number;
+  planets: number;
+  starships: number;
   };
   itemsPerPage: {
-    films: number;
-    characters: number;
-    planets: number;
-    starships: number;
+  films: number;
+  characters: number;
+  planets: number;
+  starships: number;
   };
   cardSizes: CardSizes;
   planetsGapX?: number;
