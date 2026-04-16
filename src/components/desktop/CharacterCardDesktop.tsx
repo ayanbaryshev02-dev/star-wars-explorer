@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import Lightsaber from '../Lightsaber';
 
 interface CharacterCardProps {
@@ -9,11 +9,11 @@ interface CharacterCardProps {
 }
 
 const CharacterCard = ({ id, name, imageUrl }: CharacterCardProps) => {
-  const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {
-    navigate(`/character/${id}`);
+    setSearchParams({ type: 'character', id: String(id) });
   };
 
   return (

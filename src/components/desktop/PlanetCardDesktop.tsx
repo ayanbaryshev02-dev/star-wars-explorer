@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import Lightsaber from '../Lightsaber';
 
 interface PlanetCardDesktopProps {
@@ -9,11 +9,11 @@ interface PlanetCardDesktopProps {
 }
 
 const PlanetCardDesktop = ({ id, name, imageUrl }: PlanetCardDesktopProps) => {
-  const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {
-    navigate(`/planet/${id}`);
+    setSearchParams({ type: 'planet', id: String(id) });
   };
 
   return (

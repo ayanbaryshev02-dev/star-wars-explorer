@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
 import Pagination from '../Pagination';
 
 interface DetailModalDesktopProps {
@@ -14,6 +13,7 @@ interface DetailModalDesktopProps {
   totalItems: number;
   currentIndex: number;
   onPageChange: (index: number) => void;
+  onClose: () => void;
   sectionId?: string;
 }
 
@@ -38,28 +38,47 @@ const DetailModalDesktop = ({
   totalItems,
   currentIndex,
   onPageChange,
-  sectionId,
+  onClose,
 }: DetailModalDesktopProps) => {
-  const navigate = useNavigate();
   const [isExiting, setIsExiting] = useState(false);
-  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
+  const wheelCooldown = useRef(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => {
     setIsExiting(true);
-    setTimeout(() => {
-      if (sectionId) {
-        navigate(`/#${sectionId}`);
-      } else {
-        navigate('/');
-      }
-    }, 300);
+    setTimeout(() => onClose(), 300);
   };
 
   const handlePageChange = (newIndex: number) => {
     if (newIndex === currentIndex) return;
-    setSlideDirection(newIndex > currentIndex ? 'left' : 'right');
-    setTimeout(() => onPageChange(newIndex), 150);
+    onPageChange(newIndex);
   };
+
+  useEffect(() => {
+    const el = overlayRef.current;
+    if (!el) return;
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (wheelCooldown.current) return;
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (Math.abs(delta) < 30) return;
+
+      wheelCooldown.current = true;
+      setTimeout(() => { wheelCooldown.current = false; }, 400);
+
+      if (delta > 0) {
+        const next = currentIndex < totalItems - 1 ? currentIndex + 1 : 0;
+        onPageChange(next);
+      } else {
+        const prev = currentIndex > 0 ? currentIndex - 1 : totalItems - 1;
+        onPageChange(prev);
+      }
+    };
+
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, [currentIndex, totalItems, onPageChange]);
 
   const margins = CONTENT_MARGINS[contentType];
   const leftContainerWidth = contentType === 'planet' ? PLANET_CONTAINER_WIDTH : contentType === 'starship' ? '700px' : 'auto';
@@ -73,16 +92,10 @@ const DetailModalDesktop = ({
         ${isExiting ? 'animate-fadeOut' : 'animate-fadeIn'}
       `}
       onClick={handleClose}
+      ref={overlayRef}
     >
       <div
-        className={`
-          relative border border-primary rounded-xl
-          w-[952px] h-[476px] bg-transparent
-          transition-all duration-300
-          ${slideDirection === 'left' ? 'animate-slideOutLeft' : ''}
-          ${slideDirection === 'right' ? 'animate-slideOutRight' : ''}
-          ${!slideDirection ? 'animate-slideIn' : ''}
-        `}
+        className="relative border border-primary rounded-xl w-[952px] h-[476px] bg-transparent animate-slideIn"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -103,36 +116,20 @@ const DetailModalDesktop = ({
 
         <div className="flex h-full overflow-hidden rounded-xl">
           <div
-            className={`
-              flex-shrink-0 relative flex items-center h-full
-              ${shouldClipContent ? 'overflow-hidden' : ''}
-            `}
-            style={{
-              marginLeft: margins.left,
-              width: leftContainerWidth,
-            }}
+            className={`flex-shrink-0 relative flex items-center h-full ${shouldClipContent ? 'overflow-hidden' : ''}`}
+            style={{ marginLeft: margins.left, width: leftContainerWidth }}
           >
             <div className="relative">
               {leftContent}
               {contentType === 'photo' && (
-                <img
-                  src="/images/ui/line.svg"
-                  alt=""
-                  className="absolute top-0 right-0 h-full"
-                  style={{ width: 'auto' }}
-                />
+                <img src="/images/ui/line.svg" alt="" className="absolute top-0 right-0 h-full" style={{ width: 'auto' }} />
               )}
             </div>
           </div>
 
           <div
             className="flex flex-col"
-            style={{
-              marginLeft: margins.right,
-              marginRight: '55px',
-              width: '405px',
-              paddingTop: '24px',
-            }}
+            style={{ marginLeft: margins.right, marginRight: '55px', width: '405px', paddingTop: '24px' }}
           >
             <div className="mb-[27px]">
               <img
@@ -146,12 +143,7 @@ const DetailModalDesktop = ({
 
             <h2 className="font-avant-garde text-2xl text-primary mb-4">
               {title}
-              {subtitle && (
-                <>
-                  <br />
-                  <span className="text-base">{subtitle}</span>
-                </>
-              )}
+              {subtitle && (<><br /><span className="text-base">{subtitle}</span></>)}
             </h2>
 
             {characteristics && characteristics.length > 0 && (
@@ -168,17 +160,12 @@ const DetailModalDesktop = ({
             )}
 
             <div className="flex-1 overflow-hidden">
-              <p className="font-stellar-light text-base leading-[25px] text-primary">
-                {description}
-              </p>
+              <p className="font-stellar text-base leading-[25px] text-primary">{description}</p>
             </div>
           </div>
         </div>
 
-        <div
-          className="absolute left-1/2 -translate-x-1/2"
-          style={{ top: 'calc(100% + 30px)' }}
-        >
+        <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 'calc(100% + 30px)' }}>
           <Pagination
             totalItems={totalItems}
             currentIndex={currentIndex}

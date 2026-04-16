@@ -15,6 +15,7 @@ interface DetailModalProps {
   totalItems: number;
   currentIndex: number;
   onPageChange: (index: number) => void;
+  onClose: () => void;
   sectionId?: string;
 }
 

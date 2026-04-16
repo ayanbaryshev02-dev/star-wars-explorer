@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getPlanet } from '../services/swapi';
+import { getPlanets } from '../services/swapi';
 import { PLANET_IDS } from '../constants/imageMapping';
 import type { Planet } from '../types';
 
@@ -12,8 +12,7 @@ export const usePlanets = () => {
     const fetchPlanets = async () => {
       try {
         setLoading(true);
-        const promises = PLANET_IDS.map(id => getPlanet(id));
-        const data = await Promise.all(promises);
+        const data = await getPlanets(PLANET_IDS);
         setPlanets(data);
       } catch (err) {
         setError('Failed to load planets');

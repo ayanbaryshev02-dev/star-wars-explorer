@@ -4,16 +4,11 @@ import Pagination from '../components/Pagination';
 import { useFilms } from '../hooks/useFilms';
 import { filmImages } from '../constants/imageMapping';
 
-interface FilmsSectionMobileProps {
-  onCardClick: () => void;
-}
-
-const FilmsSectionMobile = ({ onCardClick }: FilmsSectionMobileProps) => {
+const FilmsSectionMobile = () => {
   const { films, loading } = useFilms();
   const [currentPage, setCurrentPage] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   
-  // Swipe state
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -29,7 +24,6 @@ const FilmsSectionMobile = ({ onCardClick }: FilmsSectionMobileProps) => {
     }, 150);
   };
 
-  // Swipe handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -39,6 +33,11 @@ const FilmsSectionMobile = ({ onCardClick }: FilmsSectionMobileProps) => {
   };
 
   const handleTouchEnd = () => {
+    if (touchEndX.current === 0) {
+      touchStartX.current = 0;
+      return;
+    }
+
     const swipeDistance = touchStartX.current - touchEndX.current;
     const minSwipeDistance = 50;
     
@@ -78,7 +77,6 @@ const FilmsSectionMobile = ({ onCardClick }: FilmsSectionMobileProps) => {
           ${!slideDirection ? 'animate-slideIn' : ''}
         `}
         style={{ touchAction: 'pan-y' }}
-        onClick={onCardClick}
       >
         <FilmCard
           id={filmId}

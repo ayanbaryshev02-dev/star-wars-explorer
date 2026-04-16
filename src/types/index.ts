@@ -1,4 +1,3 @@
-
 export interface Film {
   title: string;
   episode_id: number;
@@ -131,9 +130,6 @@ export interface EnrichedFilm extends Film {
 }
 
 
-
-
-export type ExtractId = (url: string) => number;
 
 
 export const CHARACTERS_WITH_CARDS = [

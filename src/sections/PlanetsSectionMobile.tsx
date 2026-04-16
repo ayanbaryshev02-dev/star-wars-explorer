@@ -12,7 +12,6 @@ const PlanetsSectionMobile = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   
-  // Swipe state
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -32,7 +31,6 @@ const PlanetsSectionMobile = () => {
     }, 150);
   };
 
-  // Swipe handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -42,6 +40,11 @@ const PlanetsSectionMobile = () => {
   };
 
   const handleTouchEnd = () => {
+    if (touchEndX.current === 0) {
+      touchStartX.current = 0;
+      return;
+    }
+
     const swipeDistance = touchStartX.current - touchEndX.current;
     const minSwipeDistance = 50;
     

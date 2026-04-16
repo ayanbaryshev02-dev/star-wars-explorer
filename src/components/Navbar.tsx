@@ -31,12 +31,16 @@ const Navbar = () => {
 
   const isActive = (section: string) => {
     if (location.pathname === '/') {
+      const searchType = new URLSearchParams(location.search).get('type');
+      if (searchType) {
+        if (section === 'films' && searchType === 'film') return true;
+        if (section === 'characters' && searchType === 'character') return true;
+        if (section === 'planets' && searchType === 'planet') return true;
+        if (section === 'starships' && searchType === 'starship') return true;
+        return false;
+      }
       return activeSection === section;
     }
-    if (section === 'films' && location.pathname.includes('/film/')) return true;
-    if (section === 'characters' && location.pathname.includes('/character/')) return true;
-    if (section === 'planets' && location.pathname.includes('/planet/')) return true;
-    if (section === 'starships' && location.pathname.includes('/starship/')) return true;
     return false;
   };
 

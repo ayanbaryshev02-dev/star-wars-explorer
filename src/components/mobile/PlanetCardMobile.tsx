@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useBreakpoint } from '../../hooks/useBreakpoint';
 import { RESPONSIVE_CONFIG } from '../../config/responsiveConfig';
 import Lightsaber from '../Lightsaber';
@@ -11,14 +11,14 @@ interface PlanetCardMobileProps {
 }
 
 const PlanetCardMobile = ({ id, name, imageUrl }: PlanetCardMobileProps) => {
-  const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
   const { device } = useBreakpoint();
   const [isHovered, setIsHovered] = useState(false);
 
   const config = RESPONSIVE_CONFIG[device].cardSizes.planet;
 
   const handleClick = () => {
-    navigate(`/planet/${id}`);
+    setSearchParams({ type: 'planet', id: String(id) });
   };
 
   return (
